@@ -7,7 +7,8 @@ Use this checklist before copying this listing to the public `xiaohongshu-xhs-re
 - Repository name: `xiaohongshu-xhs-rednote-mcp`
 - Repository URL: `https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp`
 - Repository description: `Read-only Xiaohongshu / XHS / RedNote MCP for note search, note details, comments, creator profiles, and creator note lists.`
-- Repository topics: `xiaohongshu`, `xhs`, `rednote`, `mcp`, `social-media`, `social-insights`, `marketing-research`, `comment-analysis`
+- Current repository topics: `mcp`, `xiaohongshu`, `social-insights`, `xhs`, `rednote`
+- Optional expansion topics: `social-media`, `marketing-research`, `comment-analysis`
 - Root README title: `Xiaohongshu XHS RedNote Social Media Data Assistant MCP`
 - Website: `https://52choujiang.com/assistant`
 - MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
