@@ -95,4 +95,4 @@ Public metadata files in this repository:
 
 ## License
 
-The public documentation and configuration examples in this repository are released under the MIT License. The license does not cover the managed service implementation or hosted infrastructure.
+The files in this public repository are released under the MIT License. The license does not cover the managed service implementation, hosted infrastructure, or any private backend code outside this repository.
