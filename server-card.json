@@ -1,0 +1,72 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.52choujiang/xhs-insights",
+  "title": "Xiaohongshu XHS RedNote Social Media Data Assistant MCP",
+  "description": "Read-only Xiaohongshu / XHS / RedNote MCP for note search, note details, comments, creator profiles, and creator note lists.",
+  "version": "0.1.3",
+  "website": "https://52choujiang.com/assistant",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.52choujiang.com/xhs/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer API key from Social Media Data Assistant",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "name": "xhs_search_notes",
+      "description": "Search Xiaohongshu notes by keyword for research and discovery."
+    },
+    {
+      "name": "xhs_get_note_detail_by_note_url",
+      "description": "Resolve a shared XHS link or share text into structured note details."
+    },
+    {
+      "name": "xhs_get_note_detail_by_note_id",
+      "description": "Fetch structured note details when the caller already has a note ID."
+    },
+    {
+      "name": "xhs_get_note_comments_by_note_id",
+      "description": "Fetch paginated first-level comments when the caller already has a note ID."
+    },
+    {
+      "name": "xhs_get_note_comments_by_note_url",
+      "description": "Fetch paginated first-level comments directly from a shared note URL or share text."
+    },
+    {
+      "name": "xhs_get_user_info_by_user_id",
+      "description": "Fetch creator profile data when the caller already has a user ID."
+    },
+    {
+      "name": "xhs_get_user_info_by_profile_url",
+      "description": "Resolve a profile link or share text into creator profile data."
+    },
+    {
+      "name": "xhs_get_user_posted_notes_by_user_id",
+      "description": "Fetch a paginated list of notes published by a creator when the caller already has a user ID."
+    },
+    {
+      "name": "xhs_get_user_posted_notes_by_profile_url",
+      "description": "Fetch a paginated list of notes published by a creator from a profile link or share text."
+    }
+  ],
+  "tags": [
+    "xiaohongshu",
+    "xhs",
+    "rednote",
+    "social-media",
+    "social-insights",
+    "competitor-research",
+    "comment-analysis",
+    "topic-discovery",
+    "marketing-research",
+    "mcp"
+  ]
+}

@@ -1,0 +1,4 @@
+[mcp_servers.social-insights-assistant-xhs-mcp]
+enabled = true
+url = "https://mcp.52choujiang.com/xhs/mcp"
+bearer_token_env_var = "XHS_MCP_API_KEY"
