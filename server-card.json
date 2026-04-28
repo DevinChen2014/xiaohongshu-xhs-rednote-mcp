@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.52choujiang/xhs-insights",
-  "title": "Xiaohongshu XHS RedNote Social Media Data Assistant MCP",
-  "description": "Read-only Xiaohongshu / XHS / RedNote MCP for note search, note details, comments, creator profiles, and creator note lists.",
+  "title": "Xiaohongshu MCP | XHS MCP | RedNote MCP",
+  "description": "Read-only Xiaohongshu MCP / XHS MCP / RedNote MCP for note search, note details, first-level comments, creator profiles, and creator note lists.",
   "version": "0.1.3",
   "website": "https://52choujiang.com/assistant",
   "remotes": [
@@ -59,14 +59,15 @@
   ],
   "tags": [
     "xiaohongshu",
+    "xiaohongshu-mcp",
     "xhs",
+    "xhs-mcp",
     "rednote",
-    "social-media",
+    "rednote-mcp",
+    "mcp",
+    "mcp-server",
     "social-insights",
-    "competitor-research",
-    "comment-analysis",
-    "topic-discovery",
     "marketing-research",
-    "mcp"
+    "comment-analysis"
   ]
 }

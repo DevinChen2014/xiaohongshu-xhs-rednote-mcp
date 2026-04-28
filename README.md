@@ -1,8 +1,19 @@
-# Xiaohongshu XHS RedNote Social Media Data Assistant MCP
+# Xiaohongshu MCP | XHS MCP | RedNote MCP
 
-Remote read-only MCP access for Xiaohongshu / XHS / RedNote workflows. This listing repository contains public documentation, MCP metadata, and client configuration examples for the managed Social Media Data Assistant XHS MCP service.
+This public repository documents a hosted Xiaohongshu MCP / XHS MCP / RedNote MCP service for note search, note details, first-level comments, creator profiles, and creator note lists.
+
+If you are looking for a Xiaohongshu MCP, XHS MCP, or RedNote MCP for social media research workflows, this repository contains the public connection guide, MCP metadata, and client configuration examples for the managed Social Media Data Assistant service.
 
 The managed service helps AI assistants search Xiaohongshu notes, read structured note details, fetch paginated first-level comments, look up creator profiles, and retrieve creator note lists for competitor research, audience insight, creator profiling, and topic discovery.
+
+## Search Aliases
+
+Common search phrases for this hosted MCP service:
+
+- `Xiaohongshu MCP`
+- `XHS MCP`
+- `RedNote MCP`
+- `Xiaohongshu note search MCP`
 
 ## Service
 
@@ -55,7 +66,7 @@ Use the remote MCP endpoint with an Authorization header:
 ```json
 {
   "mcpServers": {
-    "social-insights-assistant-xhs-mcp": {
+    "xiaohongshu-xhs-rednote-mcp": {
       "type": "streamable_http",
       "url": "https://mcp.52choujiang.com/xhs/mcp",
       "headers": {
