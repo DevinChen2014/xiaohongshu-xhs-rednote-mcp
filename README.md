@@ -1,15 +1,17 @@
-# Xiaohongshu MCP | XHS MCP | RedNote MCP
+# 小红书 MCP | Xiaohongshu MCP | XHS MCP | RedNote MCP
 
-This public repository documents a hosted Xiaohongshu MCP / XHS MCP / RedNote MCP service for note search, note details, first-level comments, creator profiles, and creator note lists.
+This public repository documents a hosted 小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP service for note search, note details, first-level comments, creator profiles, and creator note lists.
 
-If you are looking for a Xiaohongshu MCP, XHS MCP, or RedNote MCP for social media research workflows, this repository contains the public connection guide, MCP metadata, and client configuration examples for the managed Social Media Data Assistant service.
+If you are looking for a 小红书 MCP, Xiaohongshu MCP, XHS MCP, or RedNote MCP for social media research workflows, this repository contains the public connection guide, MCP metadata, and client configuration examples for the managed Social Media Data Assistant service.
 
-The managed service helps AI assistants search Xiaohongshu notes, read structured note details, fetch paginated first-level comments, look up creator profiles, and retrieve creator note lists for competitor research, audience insight, creator profiling, and topic discovery.
+The managed service helps AI assistants search Xiaohongshu / 小红书 notes, read structured note details, fetch paginated first-level comments, look up creator profiles, and retrieve creator note lists for competitor research, audience insight, creator profiling, and topic discovery.
 
 ## Search Aliases
 
 Common search phrases for this hosted MCP service:
 
+- `小红书 MCP`
+- `小红书 XHS MCP`
 - `Xiaohongshu MCP`
 - `XHS MCP`
 - `RedNote MCP`
@@ -43,7 +45,7 @@ Supported workflows include:
 
 | Tool | Public purpose |
 | --- | --- |
-| `xhs_search_notes` | Search Xiaohongshu notes by keyword for research and discovery. |
+| `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword for research and discovery. |
 | `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link or share text into structured note details. |
 | `xhs_get_note_detail_by_note_id` | Fetch structured note details when the caller already has a note ID. |
 | `xhs_get_note_comments_by_note_id` | Fetch paginated first-level comments when the caller already has a note ID. |

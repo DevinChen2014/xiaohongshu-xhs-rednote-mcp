@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.52choujiang/xhs-insights",
-  "title": "Xiaohongshu MCP | XHS MCP | RedNote MCP",
-  "description": "Read-only Xiaohongshu MCP / XHS MCP / RedNote MCP for note search, note details, first-level comments, creator profiles, and creator note lists.",
+  "title": "小红书 MCP | Xiaohongshu MCP | XHS MCP | RedNote MCP",
+  "description": "Read-only 小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP for note search, note details, first-level comments, creator profiles, and creator note lists.",
   "version": "0.1.3",
   "website": "https://52choujiang.com/assistant",
   "remotes": [
@@ -22,7 +22,7 @@
   "tools": [
     {
       "name": "xhs_search_notes",
-      "description": "Search Xiaohongshu notes by keyword for research and discovery."
+      "description": "Search Xiaohongshu / 小红书 notes by keyword for research and discovery."
     },
     {
       "name": "xhs_get_note_detail_by_note_url",
