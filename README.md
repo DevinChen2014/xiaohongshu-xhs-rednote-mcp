@@ -57,6 +57,12 @@ docker build -t xhs-mcp-bridge .
 docker run --rm -i -e XHS_MCP_API_KEY="<your_api_key>" xhs-mcp-bridge
 ```
 
+If Docker Hub is slow from your network, keep the default image unchanged for normal use and override only during local builds:
+
+```bash
+docker build --build-arg NODE_IMAGE=mirror.gcr.io/library/node:20-alpine -t xhs-mcp-bridge .
+```
+
 ## Read-Only Scope
 
 This MCP service is designed for read-only social media intelligence workflows. It does not provide account login, posting, editing, liking, commenting, or other account actions.
