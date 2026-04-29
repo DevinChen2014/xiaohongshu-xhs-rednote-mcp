@@ -1,14 +1,18 @@
 # 小红书 MCP | Xiaohongshu MCP | XHS MCP | RedNote MCP
 
-This public repository documents a hosted 小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP service for note search, note details, first-level comments, creator profiles, and creator note lists.
+This public repository provides a minimal MCP bridge plus public connection docs for a hosted 小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP service.
 
-If you are looking for a 小红书 MCP, Xiaohongshu MCP, XHS MCP, or RedNote MCP for social media research workflows, this repository contains the public connection guide, MCP metadata, and client configuration examples for the managed Social Media Data Assistant service.
+If you are looking for a 小红书 MCP, Xiaohongshu MCP, XHS MCP, or RedNote MCP for social media research workflows, this repository includes:
 
-The managed service helps AI assistants search Xiaohongshu / 小红书 notes, read structured note details, fetch paginated first-level comments, look up creator profiles, and retrieve creator note lists for competitor research, audience insight, creator profiling, and topic discovery.
+- a minimal local stdio bridge for MCP clients and Glama inspection
+- public MCP metadata and client configuration examples
+- the direct hosted `streamable-http` endpoint for clients that already support remote MCP
+
+The business implementation is privately hosted. This repository exposes only the public connection surface for read-only social media intelligence workflows.
 
 ## Search Aliases
 
-Common search phrases for this hosted MCP service:
+Common search phrases for this MCP service:
 
 - `小红书 MCP`
 - `小红书 XHS MCP`
@@ -19,14 +23,39 @@ Common search phrases for this hosted MCP service:
 
 ## Service
 
-- MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
-- Transport: `streamable-http`
+- Hosted upstream MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
+- Hosted upstream transport: `streamable-http`
 - Authentication: `Authorization: Bearer <XHS_MCP_API_KEY>`
 - Website: <https://52choujiang.com/assistant>
 - Registry name: `com.52choujiang/xhs-insights`
-- Current public version: `0.1.3`
+- Current public capability version: `0.1.3`
 
-This repository documents how to connect to the hosted MCP service. It does not include the managed service implementation.
+## Bridge
+
+This repository also ships a minimal local stdio bridge. It forwards MCP requests to the hosted upstream service and keeps the public repo runnable for Glama `server` inspection and MCP clients that prefer command-based servers.
+
+The bridge does not contain the private service implementation. It only relays MCP traffic to the hosted endpoint.
+
+### Bridge Environment
+
+- `XHS_MCP_API_KEY`
+  Required for authenticated tool calls. Discovery methods such as `initialize` and `tools/list` can still be inspected without a key.
+- `XHS_MCP_UPSTREAM_URL`
+  Optional override for the hosted upstream URL. Default: `https://mcp.52choujiang.com/xhs/mcp`
+
+### Local Run
+
+```bash
+npm install
+XHS_MCP_API_KEY="<your_api_key>" npm start
+```
+
+### Docker Run
+
+```bash
+docker build -t xhs-mcp-bridge .
+docker run --rm -i -e XHS_MCP_API_KEY="<your_api_key>" xhs-mcp-bridge
+```
 
 ## Read-Only Scope
 
@@ -57,38 +86,36 @@ Supported workflows include:
 
 ## Quick Start
 
-Set your API key in an environment variable:
-
-```bash
-export XHS_MCP_API_KEY="<your_api_key>"
-```
-
-Use the remote MCP endpoint with an Authorization header:
+For command-based MCP clients, use the local bridge published by this repository:
 
 ```json
 {
   "mcpServers": {
     "xiaohongshu-xhs-rednote-mcp": {
-      "type": "streamable_http",
-      "url": "https://mcp.52choujiang.com/xhs/mcp",
-      "headers": {
-        "Authorization": "Bearer <XHS_MCP_API_KEY>"
+      "command": "npx",
+      "args": [
+        "-y",
+        "github:DevinChen2014/xiaohongshu-xhs-rednote-mcp"
+      ],
+      "env": {
+        "XHS_MCP_API_KEY": "<XHS_MCP_API_KEY>"
       }
     }
   }
 }
 ```
 
-Some MCP clients use `streamableHttp` or `http` as the transport key instead of `streamable_http`. Keep the same URL and Authorization header, and adapt only the transport key if your client requires a different spelling.
+For clients that already support authenticated `streamable-http`, use the hosted upstream endpoint directly. A ready-to-copy example is available in [`examples/streamable_http_config.json`](examples/streamable_http_config.json).
 
 ## Client Examples
 
 Configuration examples are available in [examples](examples/):
 
-- [Streamable HTTP config](examples/streamable_http_config.json)
-- [Claude Desktop config](examples/claude_desktop_config.json)
-- [Cursor MCP config](examples/cursor_mcp.json)
-- [Codex config](examples/codex_config.toml)
+- [Generic command-based MCP config](mcp.json)
+- [Claude Desktop bridge config](examples/claude_desktop_config.json)
+- [Cursor bridge config](examples/cursor_mcp.json)
+- [Codex bridge config](examples/codex_config.toml)
+- [Direct streamable HTTP config](examples/streamable_http_config.json)
 
 ## API Key
 
@@ -102,10 +129,11 @@ Use the key as a Bearer token in the `Authorization` request header. Do not comm
 
 Public metadata files in this repository:
 
-- [server-card.json](server-card.json): MCP registry-style server metadata.
-- [mcp.json](mcp.json): reusable remote MCP configuration.
+- [server-card.json](server-card.json): MCP registry-style metadata for the hosted upstream service.
+- [mcp.json](mcp.json): generic command-based config for the local bridge in this repo.
+- [glama.json](glama.json): Glama repository ownership metadata.
 - [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md): checklist for MCP directory submissions.
 
 ## License
 
-The files in this public repository are released under the MIT License. The license does not cover the managed service implementation, hosted infrastructure, or any private backend code outside this repository.
+The files in this public repository are released under the MIT License. The license covers the public bridge wrapper, documentation, and configuration examples in this repository only. It does not cover the managed service implementation, hosted infrastructure, or any private backend code outside this repository.
