@@ -47,14 +47,14 @@ The bridge does not contain the private service implementation. It only relays M
 
 ```bash
 npm install
-XHS_MCP_API_KEY="<your_api_key>" npm start
+XHS_MCP_API_KEY="<XHS_MCP_API_KEY>" npm start
 ```
 
 ### Docker Run
 
 ```bash
 docker build -t xhs-mcp-bridge .
-docker run --rm -i -e XHS_MCP_API_KEY="<your_api_key>" xhs-mcp-bridge
+docker run --rm -i -e XHS_MCP_API_KEY="<XHS_MCP_API_KEY>" xhs-mcp-bridge
 ```
 
 If Docker Hub is slow from your network, keep the default image unchanged for normal use and override only during local builds:
