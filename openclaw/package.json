@@ -1,0 +1,49 @@
+{
+  "name": "xhs-insights-openclaw",
+  "version": "0.1.6",
+  "description": "OpenClaw native plugin shim for the hosted read-only XHS Insights MCP service.",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Social Insights Assistant",
+    "url": "https://52choujiang.com/assistant"
+  },
+  "homepage": "https://52choujiang.com/assistant",
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "openclaw-plugin",
+    "openclaw",
+    "mcp",
+    "xiaohongshu",
+    "xhs",
+    "rednote",
+    "social-insights",
+    "marketing-research",
+    "comment-analysis"
+  ],
+  "openclaw": {
+    "kind": "plugin",
+    "manifest": "openclaw.plugin.json",
+    "extensions": [
+      "./index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.0.0"
+    },
+    "build": {
+      "openclawVersion": "2026.5.9"
+    }
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "files": [
+    "openclaw.plugin.json",
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ]
+}
