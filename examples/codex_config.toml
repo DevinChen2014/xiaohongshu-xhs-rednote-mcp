@@ -1,7 +1,4 @@
-[mcp_servers.xiaohongshu-xhs-rednote-mcp]
+[mcp_servers.xhs-insights]
 enabled = true
-command = "npx"
-args = ["-y", "github:DevinChen2014/xiaohongshu-xhs-rednote-mcp"]
-
-[mcp_servers.xiaohongshu-xhs-rednote-mcp.env]
-XHS_MCP_API_KEY = "<XHS_MCP_API_KEY>"
+url = "https://mcp.52choujiang.com/xhs/mcp"
+bearer_token_env_var = "SOCIALDATAX_API_KEY"

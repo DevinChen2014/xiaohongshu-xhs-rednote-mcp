@@ -1,10 +1,10 @@
 {
   "mcpServers": {
-    "xiaohongshu-xhs-rednote-mcp": {
+    "xhs-insights": {
       "type": "streamable_http",
       "url": "https://mcp.52choujiang.com/xhs/mcp",
       "headers": {
-        "Authorization": "Bearer <XHS_MCP_API_KEY>"
+        "Authorization": "Bearer <SOCIALDATAX_API_KEY>"
       }
     }
   }

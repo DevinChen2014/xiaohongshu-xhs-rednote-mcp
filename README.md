@@ -1,12 +1,12 @@
 # 小红书 MCP | Xiaohongshu MCP | XHS MCP | RedNote MCP
 
-This public repository provides a minimal MCP bridge plus public connection docs for a hosted 小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP service.
+This public repository provides public connection docs and MCP metadata for a hosted 小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP service.
 
 If you are looking for a 小红书 MCP, Xiaohongshu MCP, XHS MCP, or RedNote MCP for social media research workflows, this repository includes:
 
-- a minimal local stdio bridge for MCP clients and Glama inspection
 - public MCP metadata and client configuration examples
-- the direct hosted `streamable-http` endpoint for clients that already support remote MCP
+- the hosted `streamable-http` endpoint for clients that support remote MCP
+- an `mcp-remote` fallback example for command/stdio-only MCP clients
 
 The business implementation is privately hosted. This repository exposes only the public connection surface for read-only social media intelligence workflows.
 
@@ -15,53 +15,30 @@ The business implementation is privately hosted. This repository exposes only th
 Common search phrases for this MCP service:
 
 - `小红书 MCP`
+- `小红书 数据 MCP`
+- `小红书 搜索 MCP`
 - `小红书 XHS MCP`
 - `Xiaohongshu MCP`
+- `Xiaohongshu data MCP`
 - `XHS MCP`
+- `XHS data MCP`
 - `RedNote MCP`
+- `RedNote data MCP`
 - `Xiaohongshu note search MCP`
 
 ## Service
 
-- Hosted upstream MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
-- Hosted upstream transport: `streamable-http`
-- Authentication: `Authorization: Bearer <XHS_MCP_API_KEY>`
-- Website: <https://52choujiang.com/assistant>
+- Hosted MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
+- Hosted transport: `streamable-http`
+- Authentication: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
+- Product: `SocialDataX` / `社媒数据助手`
+- Website: <https://socialdatax.com>
 - Registry name: `com.52choujiang/xhs-insights`
-- Current public capability version: `0.1.3`
+- Current public capability version: `0.1.5`
 
-## Bridge
+## Platform MCP
 
-This repository also ships a minimal local stdio bridge. It forwards MCP requests to the hosted upstream service and keeps the public repo runnable for Glama `server` inspection and MCP clients that prefer command-based servers.
-
-The bridge does not contain the private service implementation. It only relays MCP traffic to the hosted endpoint.
-
-### Bridge Environment
-
-- `XHS_MCP_API_KEY`
-  Required for authenticated tool calls. Discovery methods such as `initialize` and `tools/list` can still be inspected without a key.
-- `XHS_MCP_UPSTREAM_URL`
-  Optional override for the hosted upstream URL. Default: `https://mcp.52choujiang.com/xhs/mcp`
-
-### Local Run
-
-```bash
-npm install
-XHS_MCP_API_KEY="<XHS_MCP_API_KEY>" npm start
-```
-
-### Docker Run
-
-```bash
-docker build -t xhs-mcp-bridge .
-docker run --rm -i -e XHS_MCP_API_KEY="<XHS_MCP_API_KEY>" xhs-mcp-bridge
-```
-
-If Docker Hub is slow from your network, keep the default image unchanged for normal use and override only during local builds:
-
-```bash
-docker build --build-arg NODE_IMAGE=mirror.gcr.io/library/node:20-alpine -t xhs-mcp-bridge .
-```
+Use the hosted `streamable-http` endpoint directly from clients that support authenticated remote MCP. For clients that only support command/stdio MCP servers, use `mcp-remote` as a local compatibility proxy.
 
 ## Read-Only Scope
 
@@ -69,65 +46,91 @@ This MCP service is designed for read-only social media intelligence workflows. 
 
 Supported workflows include:
 
-- Search related Xiaohongshu notes by keyword.
-- Resolve a shared note link or share text into structured note details.
+- Search related Xiaohongshu notes by keyword, with optional sort, note type, and publish-time filters.
+- Resolve a shared note link, short link, share text, or note ID into structured note details.
 - Read note details when the caller already has a note ID.
 - Fetch paginated first-level comments for comment analysis.
-- Read creator profile data from a profile link or user ID.
-- Fetch paginated creator note lists for content style and account research.
+- Fetch paginated replies under a first-level comment.
+- Read creator profile data from a profile link, short link, share text, or user ID.
+- Fetch paginated creator note lists from a user ID, profile link, short link, or share text for content style and account research.
 
 ## Tools
 
 | Tool | Public purpose |
 | --- | --- |
-| `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword for research and discovery. |
-| `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link or share text into structured note details. |
+| `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, and publish-time filters. |
+| `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, share text, or note ID into structured note details. |
 | `xhs_get_note_detail_by_note_id` | Fetch structured note details when the caller already has a note ID. |
 | `xhs_get_note_comments_by_note_id` | Fetch paginated first-level comments when the caller already has a note ID. |
-| `xhs_get_note_comments_by_note_url` | Fetch paginated first-level comments directly from a shared note URL or share text. |
+| `xhs_get_note_comments_by_note_url` | Fetch paginated first-level comments directly from a shared note URL, short link, or share text. |
+| `xhs_get_note_sub_comments_by_comment_id` | Fetch paginated replies under a first-level comment by note ID and comment ID. |
 | `xhs_get_user_info_by_user_id` | Fetch creator profile data when the caller already has a user ID. |
-| `xhs_get_user_info_by_profile_url` | Resolve a profile link or share text into creator profile data. |
+| `xhs_get_user_info_by_profile_url` | Resolve a profile link, short link, or share text into creator profile data. |
 | `xhs_get_user_posted_notes_by_user_id` | Fetch a paginated list of notes published by a creator when the caller already has a user ID. |
-| `xhs_get_user_posted_notes_by_profile_url` | Fetch a paginated list of notes published by a creator from a profile link or share text. |
+| `xhs_get_user_posted_notes_by_profile_url` | Fetch a paginated list of notes published by a creator from a profile link, short link, or share text. |
 
 ## Quick Start
 
-For command-based MCP clients, use the local bridge published by this repository:
+For clients that support authenticated `streamable-http`, use the hosted endpoint directly:
 
 ```json
 {
   "mcpServers": {
-    "xiaohongshu-xhs-rednote-mcp": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "github:DevinChen2014/xiaohongshu-xhs-rednote-mcp"
-      ],
-      "env": {
-        "XHS_MCP_API_KEY": "<XHS_MCP_API_KEY>"
+    "xhs-insights": {
+      "type": "streamable_http",
+      "url": "https://mcp.52choujiang.com/xhs/mcp",
+      "headers": {
+        "Authorization": "Bearer <SOCIALDATAX_API_KEY>"
       }
     }
   }
 }
 ```
 
-For clients that already support authenticated `streamable-http`, use the hosted upstream endpoint directly. A ready-to-copy example is available in [`examples/streamable_http_config.json`](examples/streamable_http_config.json).
+A ready-to-copy example is available in [`examples/streamable_http_config.json`](examples/streamable_http_config.json).
+
+For command/stdio-only MCP clients, use `mcp-remote`:
+
+```json
+{
+  "mcpServers": {
+    "xhs-insights": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.52choujiang.com/xhs/mcp",
+        "--header",
+        "Authorization: Bearer <SOCIALDATAX_API_KEY>"
+      ]
+    }
+  }
+}
+```
+
+Claude Code can use remote HTTP directly:
+
+```bash
+claude mcp add --transport http --header "Authorization: Bearer <SOCIALDATAX_API_KEY>" xhs-insights https://mcp.52choujiang.com/xhs/mcp
+```
+
+Claude Desktop should use its remote MCP / Connectors UI when available. If a local configuration file in your version only supports command/stdio servers, use the `mcp-remote` fallback.
 
 ## Client Examples
 
 Configuration examples are available in [examples](examples/):
 
-- [Generic command-based MCP config](mcp.json)
-- [Claude Desktop bridge config](examples/claude_desktop_config.json)
-- [Cursor bridge config](examples/cursor_mcp.json)
-- [Codex bridge config](examples/codex_config.toml)
+- [Command/stdio fallback config](mcp.json)
+- [Claude Desktop fallback config](examples/claude_desktop_config.json)
+- [Cursor remote HTTP config](examples/cursor_mcp.json)
+- [Codex remote HTTP config](examples/codex_config.toml)
 - [Direct streamable HTTP config](examples/streamable_http_config.json)
 
 ## API Key
 
 Request or manage API access from the product website:
 
-<https://52choujiang.com/assistant>
+<https://socialdatax.com>
 
 Use the key as a Bearer token in the `Authorization` request header. Do not commit real API keys to code, docs, issues, or screenshots.
 
@@ -135,11 +138,11 @@ Use the key as a Bearer token in the `Authorization` request header. Do not comm
 
 Public metadata files in this repository:
 
-- [server-card.json](server-card.json): MCP registry-style metadata for the hosted upstream service.
-- [mcp.json](mcp.json): generic command-based config for the local bridge in this repo.
+- [server-card.json](server-card.json): directory-oriented metadata for the hosted service. Official MCP Registry publishing uses the private source repo's `registry/xhs/server.json` instead.
+- [mcp.json](mcp.json): generic command/stdio fallback config using `mcp-remote`.
 - [glama.json](glama.json): Glama repository ownership metadata.
 - [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md): checklist for MCP directory submissions.
 
 ## License
 
-The files in this public repository are released under the MIT License. The license covers the public bridge wrapper, documentation, and configuration examples in this repository only. It does not cover the managed service implementation, hosted infrastructure, or any private backend code outside this repository.
+The files in this public repository are released under the MIT License. The license covers the public documentation and configuration examples in this repository only. It does not cover the managed service implementation, hosted infrastructure, or any private backend code outside this repository.

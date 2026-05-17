@@ -1,21 +1,22 @@
 # MCP Directory Submission Checklist
 
-Use this checklist before syncing this listing to the public `xiaohongshu-xhs-rednote-mcp` repository, submitting it to MCP directories, or updating the Glama `server` entry.
+Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry.
 
 ## Public Repository
 
 - Repository name: `xiaohongshu-xhs-rednote-mcp`
 - Repository URL: `https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp`
-- Repository description: `小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP for note search, note details, comments, creator profiles, and creator note lists.`
+- Repository description: `小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP for filtered note search, note details, comments, comment replies, creator profiles, and creator note lists.`
 - Current repository topics: `mcp`, `mcp-server`, `xiaohongshu`, `xiaohongshu-mcp`, `xhs`, `xhs-mcp`, `rednote`, `rednote-mcp`
 - Optional expansion topics: `social-insights`, `marketing-research`, `comment-analysis`
 - Root README title: `小红书 MCP | Xiaohongshu MCP | XHS MCP | RedNote MCP`
-- Website: `https://52choujiang.com/assistant`
-- Hosted upstream MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
-- Hosted upstream auth: `Authorization: Bearer <XHS_MCP_API_KEY>`
-- Local bridge startup: `npx -y github:DevinChen2014/xiaohongshu-xhs-rednote-mcp`
-- Local bridge runtime env: `XHS_MCP_API_KEY=<XHS_MCP_API_KEY>`
-- License: MIT for the public bridge wrapper, documentation, and examples only
+- Product: `SocialDataX` / `社媒数据助手`
+- Website: `https://socialdatax.com`
+- Hosted MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
+- Hosted auth: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
+- Default client transport: hosted `streamable-http`
+- Command/stdio fallback: `npx -y mcp-remote https://mcp.52choujiang.com/xhs/mcp --header "Authorization: Bearer <SOCIALDATAX_API_KEY>"`
+- License: MIT for the public documentation and examples only
 
 ## Safety Checks
 
@@ -26,7 +27,7 @@ Use this checklist before syncing this listing to the public `xiaohongshu-xhs-re
 - No account data or credentials are included.
 - No generated build output is included.
 - Public text uses neutral product wording.
-- Public bridge only forwards MCP traffic and does not expose internal business code.
+- Public docs do not expose internal business code.
 
 ## Required Files
 
@@ -34,10 +35,6 @@ Use this checklist before syncing this listing to the public `xiaohongshu-xhs-re
 - `LICENSE`
 - `server-card.json`
 - `mcp.json`
-- `package.json`
-- `package-lock.json`
-- `bridge.mjs`
-- `Dockerfile`
 - `glama.json`
 - `examples/streamable_http_config.json`
 - `examples/claude_desktop_config.json`
@@ -47,10 +44,12 @@ Use this checklist before syncing this listing to the public `xiaohongshu-xhs-re
 
 ## Glama Checks
 
-- `Dockerfile` builds successfully.
-- `node bridge.mjs` starts a stdio MCP bridge.
-- `initialize` succeeds without a key.
-- `tools/list` returns the current 9 public tools.
+- Hosted streamable HTTP clients can connect directly to `https://mcp.52choujiang.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
+- With a valid key, hosted MCP `initialize` succeeds.
+- With a valid key, hosted MCP `tools/list` returns the current 10 public tools.
+- `examples/codex_config.toml` uses remote HTTP URL and `bearer_token_env_var`, not `mcp-remote`.
+- `examples/cursor_mcp.json` uses remote HTTP URL and `headers` with `${env:SOCIALDATAX_API_KEY}`, not `mcp-remote`.
+- `mcp.json` is explicitly command/stdio fallback and uses `mcp-remote`.
 - `https://glama.ai/mcp/servers/@DevinChen2014/xiaohongshu-xhs-rednote-mcp` is no longer `404`.
 - `https://glama.ai/mcp/servers/@DevinChen2014/xiaohongshu-xhs-rednote-mcp/badges/score.svg` is reachable.
 
@@ -67,11 +66,17 @@ Use this checklist before syncing this listing to the public `xiaohongshu-xhs-re
 
 - `Xiaohongshu`
 - `xiaohongshu mcp`
+- `xiaohongshu data mcp`
+- `xiaohongshu note search mcp`
 - `XHS`
 - `xhs mcp`
+- `xhs data mcp`
+- `xhs note search mcp`
 - `RedNote`
 - `rednote mcp`
+- `rednote data mcp`
 - `小红书`
 - `小红书 mcp`
+- `小红书 数据 MCP`
 - `social insights`
-- `social media data assistant`
+- `社媒数据助手`

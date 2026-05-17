@@ -1,7 +1,7 @@
 {
   "name": "xiaohongshu-xhs-rednote-mcp",
   "version": "0.1.3",
-  "description": "Local stdio bridge for the hosted Xiaohongshu / XHS / RedNote MCP service.",
+  "description": "Local stdio bridge for the hosted SocialDataX Xiaohongshu / XHS / RedNote MCP service.",
   "license": "MIT",
   "type": "module",
   "bin": "./bridge.mjs",

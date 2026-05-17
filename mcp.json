@@ -1,14 +1,14 @@
 {
   "mcpServers": {
-    "xiaohongshu-xhs-rednote-mcp": {
+    "xhs-insights": {
       "command": "npx",
       "args": [
         "-y",
-        "github:DevinChen2014/xiaohongshu-xhs-rednote-mcp"
-      ],
-      "env": {
-        "XHS_MCP_API_KEY": "<XHS_MCP_API_KEY>"
-      }
+        "mcp-remote",
+        "https://mcp.52choujiang.com/xhs/mcp",
+        "--header",
+        "Authorization: Bearer <SOCIALDATAX_API_KEY>"
+      ]
     }
   }
 }
