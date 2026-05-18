@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "xhs-insights": {
+    "socialdatax-xhs": {
       "command": "npx",
       "args": [
         "-y",

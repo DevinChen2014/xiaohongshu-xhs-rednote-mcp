@@ -1,6 +1,6 @@
 {
   "name": "xiaohongshu-xhs-rednote-mcp",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Local stdio bridge for the hosted SocialDataX Xiaohongshu / XHS / RedNote MCP service.",
   "license": "MIT",
   "type": "module",
@@ -28,7 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp.git"
   },
-  "homepage": "https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp",
+  "homepage": "https://socialdatax.com",
   "bugs": {
     "url": "https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/issues"
   },

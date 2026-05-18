@@ -15,10 +15,8 @@ const remoteEntry = join(
   "proxy.js"
 );
 
-const upstreamUrl = process.env.XHS_MCP_UPSTREAM_URL || DEFAULT_UPSTREAM_URL;
-const apiKey = (
-  process.env.SOCIALDATAX_API_KEY || process.env.XHS_MCP_API_KEY
-)?.trim();
+const upstreamUrl = process.env.SOCIALDATAX_XHS_MCP_URL || DEFAULT_UPSTREAM_URL;
+const apiKey = process.env.SOCIALDATAX_API_KEY?.trim();
 const args = [upstreamUrl, "--transport", "http-only", "--silent"];
 
 if (apiKey) {

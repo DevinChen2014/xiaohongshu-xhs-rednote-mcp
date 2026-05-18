@@ -1,4 +1,4 @@
-[mcp_servers.xhs-insights]
+[mcp_servers.socialdatax-xhs]
 enabled = true
 url = "https://mcp.52choujiang.com/xhs/mcp"
 bearer_token_env_var = "SOCIALDATAX_API_KEY"

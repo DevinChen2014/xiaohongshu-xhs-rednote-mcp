@@ -34,6 +34,7 @@ Common search phrases for this MCP service:
 - Product: `SocialDataX` / `社媒数据助手`
 - Website: <https://socialdatax.com>
 - Registry name: `com.52choujiang/xhs-insights`
+- Future registry name: `com.socialdatax/xhs-insights`
 - Current public capability version: `0.1.5`
 
 ## Platform MCP
@@ -76,7 +77,7 @@ For clients that support authenticated `streamable-http`, use the hosted endpoin
 ```json
 {
   "mcpServers": {
-    "xhs-insights": {
+    "socialdatax-xhs": {
       "type": "streamable_http",
       "url": "https://mcp.52choujiang.com/xhs/mcp",
       "headers": {
@@ -94,7 +95,7 @@ For command/stdio-only MCP clients, use `mcp-remote`:
 ```json
 {
   "mcpServers": {
-    "xhs-insights": {
+    "socialdatax-xhs": {
       "command": "npx",
       "args": [
         "-y",
@@ -111,7 +112,7 @@ For command/stdio-only MCP clients, use `mcp-remote`:
 Claude Code can use remote HTTP directly:
 
 ```bash
-claude mcp add --transport http --header "Authorization: Bearer <SOCIALDATAX_API_KEY>" xhs-insights https://mcp.52choujiang.com/xhs/mcp
+claude mcp add --transport http --header "Authorization: Bearer <SOCIALDATAX_API_KEY>" socialdatax-xhs https://mcp.52choujiang.com/xhs/mcp
 ```
 
 Claude Desktop should use its remote MCP / Connectors UI when available. If a local configuration file in your version only supports command/stdio servers, use the `mcp-remote` fallback.
@@ -138,7 +139,7 @@ Use the key as a Bearer token in the `Authorization` request header. Do not comm
 
 Public metadata files in this repository:
 
-- [server-card.json](server-card.json): directory-oriented metadata for the hosted service. Official MCP Registry publishing uses the private source repo's `registry/xhs/server.json` instead.
+- [server-card.json](server-card.json): directory-oriented metadata for the hosted service. Official MCP Registry publishing uses the private source repo's `registry/xhs/server.json` for the current `com.52choujiang/xhs-insights` entry.
 - [mcp.json](mcp.json): generic command/stdio fallback config using `mcp-remote`.
 - [glama.json](glama.json): Glama repository ownership metadata.
 - [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md): checklist for MCP directory submissions.
