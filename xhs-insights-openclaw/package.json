@@ -1,6 +1,6 @@
 {
   "name": "xhs-insights-openclaw-plugin",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "SocialDataX / 社媒数据助手 为小红书 / Xiaohongshu / XHS / RedNote 提供社媒研究支持：笔记搜索、评论分析、笔记详情、评论回复、博主信息和博主笔记。",
   "main": "index.js",
   "type": "module",

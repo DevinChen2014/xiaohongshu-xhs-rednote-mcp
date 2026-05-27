@@ -9,7 +9,7 @@ The plugin registers namespaced OpenClaw tools and forwards each call to a remot
 - Product: `SocialDataX` / `社媒数据助手`
 - Website: <https://socialdatax.com>
 - Package name: `xhs-insights-openclaw-plugin`
-- Version: `0.1.13`
+- Version: `0.1.14`
 - Search terms: Xiaohongshu, XHS, RedNote, 小红书, social media research, marketing research, comments, creator profiles
 
 ## Capabilities
@@ -73,7 +73,7 @@ clawhub package publish <public-checkout>/xhs-insights-openclaw \
   --family code-plugin \
   --name xhs-insights-openclaw-plugin \
   --display-name "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP" \
-  --version 0.1.13 \
+  --version 0.1.14 \
   --source-repo <public-owner/public-repo> \
   --source-commit <public-commit-sha> \
   --source-path xhs-insights-openclaw \
