@@ -1,0 +1,124 @@
+{
+  "name": "xhs-insights-openclaw-plugin",
+  "version": "0.1.13",
+  "description": "SocialDataX / 社媒数据助手 为小红书 / Xiaohongshu / XHS / RedNote 提供社媒研究支持：笔记搜索、评论分析、笔记详情、评论回复、博主信息和博主笔记。",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "SocialDataX",
+    "url": "https://socialdatax.com"
+  },
+  "homepage": "https://socialdatax.com",
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "keywords": [
+    "openclaw-plugin",
+    "openclaw",
+    "mcp",
+    "xiaohongshu",
+    "小红书",
+    "xhs",
+    "rednote",
+    "social-insights",
+    "social-media-research",
+    "notes",
+    "comments",
+    "creator-profiles",
+    "creator-posts",
+    "marketing-research",
+    "comment-analysis"
+  ],
+  "openclaw": {
+    "kind": "plugin",
+    "manifest": "openclaw.plugin.json",
+    "extensions": [
+      "./index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.0.0"
+    },
+    "build": {
+      "openclawVersion": "2026.5.9"
+    },
+    "runtimeRequirements": {
+      "bins": [
+        "node"
+      ],
+      "env": [
+        "SOCIALDATAX_API_KEY"
+      ],
+      "primaryEnv": "SOCIALDATAX_API_KEY",
+      "networkTargets": [
+        "https://mcp.52choujiang.com"
+      ]
+    },
+    "environment": {
+      "binaries": [
+        "node"
+      ],
+      "externalServices": [
+        {
+          "name": "mcp.52choujiang.com"
+        }
+      ]
+    },
+    "configUiHints": {
+      "connectionTimeoutMs": {
+        "label": "Connection timeout",
+        "help": "Timeout in milliseconds for hosted MCP requests.",
+        "advanced": true
+      }
+    }
+  },
+  "runtimeRequirements": {
+    "bins": [
+      "node"
+    ],
+    "env": [
+      "SOCIALDATAX_API_KEY"
+    ],
+    "primaryEnv": "SOCIALDATAX_API_KEY",
+    "networkTargets": [
+      "https://mcp.52choujiang.com"
+    ]
+  },
+  "requires": {
+    "bins": [
+      "node"
+    ],
+    "env": [
+      "SOCIALDATAX_API_KEY"
+    ]
+  },
+  "primaryEnv": "SOCIALDATAX_API_KEY",
+  "networkTargets": [
+    "https://mcp.52choujiang.com"
+  ],
+  "metadata": {
+    "xhs-insights": {
+      "requires": {
+        "bins": [
+          "node"
+        ],
+        "env": [
+          "SOCIALDATAX_API_KEY"
+        ]
+      },
+      "primaryEnv": "SOCIALDATAX_API_KEY",
+      "networkTargets": [
+        "https://mcp.52choujiang.com"
+      ]
+    }
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "files": [
+    "openclaw.plugin.json",
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ]
+}
