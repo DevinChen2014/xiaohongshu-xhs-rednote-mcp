@@ -35,7 +35,7 @@ Common search phrases for this MCP service:
 - Website: <https://socialdatax.com>
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
-- Current public capability version: `0.1.5`
+- Current public capability version: `0.1.6`
 
 ## Platform MCP
 
@@ -48,7 +48,8 @@ This MCP service is designed for read-only social media intelligence workflows. 
 Supported workflows include:
 
 - Search related Xiaohongshu notes by keyword, with optional sort, note type, and publish-time filters.
-- Resolve a shared note link, short link, share text, or note ID into structured note details.
+- Read the Xiaohongshu search hot list with title and heat value.
+- Resolve a shared note link, short link, or share text into structured note details.
 - Read note details when the caller already has a note ID.
 - Fetch paginated first-level comments for comment analysis.
 - Fetch paginated replies under a first-level comment.
@@ -60,7 +61,8 @@ Supported workflows include:
 | Tool | Public purpose |
 | --- | --- |
 | `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, and publish-time filters. |
-| `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, share text, or note ID into structured note details. |
+| `xhs_get_search_hot_list` | Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value. |
+| `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, or share text into structured note details. |
 | `xhs_get_note_detail_by_note_id` | Fetch structured note details when the caller already has a note ID. |
 | `xhs_get_note_comments_by_note_id` | Fetch paginated first-level comments when the caller already has a note ID. |
 | `xhs_get_note_comments_by_note_url` | Fetch paginated first-level comments directly from a shared note URL, short link, or share text. |

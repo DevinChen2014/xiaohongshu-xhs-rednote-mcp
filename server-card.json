@@ -1,9 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.52choujiang/xhs-insights",
-  "title": "小红书 MCP | Xiaohongshu MCP | XHS MCP | RedNote MCP",
-  "description": "Read-only XHS MCP for filtered note search, details, comments, comment replies, creator profiles, and posts.",
-  "version": "0.1.5",
+  "title": "SocialDataX 小红书 Xiaohongshu XHS RedNote MCP",
+  "description": "Read-only 小红书 / Xiaohongshu / XHS / RedNote MCP for filtered note search, search hot list, details, comments, comment replies, creator profiles, and creator notes.",
+  "version": "0.1.6",
   "website": "https://socialdatax.com",
   "remotes": [
     {
@@ -25,8 +25,12 @@
       "description": "Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, and publish-time filters."
     },
     {
+      "name": "xhs_get_search_hot_list",
+      "description": "Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value."
+    },
+    {
       "name": "xhs_get_note_detail_by_note_url",
-      "description": "Resolve a shared XHS link, short link, share text, or note ID into structured note details."
+      "description": "Resolve a shared XHS link, short link, or share text into structured note details."
     },
     {
       "name": "xhs_get_note_detail_by_note_id",
