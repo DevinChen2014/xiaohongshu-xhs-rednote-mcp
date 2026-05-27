@@ -69,7 +69,7 @@ Use ClawHub dry-run before publishing:
 ```bash
 source ~/.nvm/nvm.sh
 nvm use 24.13.0
-clawhub package publish xhs-insights-openclaw \
+clawhub package publish <public-checkout>/xhs-insights-openclaw \
   --family code-plugin \
   --name xhs-insights-openclaw-plugin \
   --display-name "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP" \
