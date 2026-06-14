@@ -9,19 +9,22 @@ The plugin registers namespaced OpenClaw tools and forwards each call to a remot
 - Product: `SocialDataX` / `社媒数据助手`
 - Website: <https://socialdatax.com>
 - Package name: `xhs-insights-openclaw-plugin`
-- Version: `0.1.14`
-- Search terms: Xiaohongshu, XHS, RedNote, 小红书, social media research, marketing research, comments, creator profiles
+- Version: `0.1.16`
+- Search terms: Xiaohongshu, XHS, RedNote, 小红书, 小红书搜索热榜, search hot list, social media research, marketing research, comments, creator profiles
 
 ## Capabilities
 
 The hosted XHS MCP supports read-only Xiaohongshu / XHS / RedNote workflows:
 
 - Search notes by keyword with optional sort, note type, and publish-time filters.
+- Fetch the Xiaohongshu / XHS / RedNote search hot list with title and heat value.
 - Resolve shared note links, short links, or share text into structured details.
 - Fetch note details directly when a note ID is already known.
 - Fetch note details, first-level comments, and comment replies.
 - Read creator profile information.
 - Fetch creator note lists for content style and account research.
+
+For XHS outputs with a returned `note_url` field: When `note_url` is non-null, preserve the full URL exactly, including `xsec_token`, such as in final answers or display; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize a public link from `note_id`.
 
 The service does not provide account login, posting, editing, liking, commenting, or other account actions.
 
@@ -73,7 +76,7 @@ clawhub package publish <public-checkout>/xhs-insights-openclaw \
   --family code-plugin \
   --name xhs-insights-openclaw-plugin \
   --display-name "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP" \
-  --version 0.1.14 \
+  --version 0.1.16 \
   --source-repo <public-owner/public-repo> \
   --source-commit <public-commit-sha> \
   --source-path xhs-insights-openclaw \

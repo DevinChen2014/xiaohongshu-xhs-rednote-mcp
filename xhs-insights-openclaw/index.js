@@ -1,6 +1,6 @@
 const PLUGIN_ID = "xhs-insights-openclaw-plugin";
 const PLUGIN_NAME = "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP";
-const PLUGIN_VERSION = "0.1.14";
+const PLUGIN_VERSION = "0.1.16";
 const DEFAULT_ENDPOINT_URL = "https://mcp.52choujiang.com/xhs/mcp";
 const DEFAULT_API_KEY_ENV = "SOCIALDATAX_API_KEY";
 const LEGACY_API_KEY_ENV = "SOCIAL_MEDIA_MCP_API_KEY";
@@ -29,10 +29,21 @@ const PAGE_TOKEN_PROPERTY = {
 
 const TOOL_DEFINITIONS = [
   {
+    name: "xhs-insights__xhs_get_search_hot_list",
+    remoteName: "xhs_get_search_hot_list",
+    label: "Get XHS Search Hot List",
+    description: "Fetch the Xiaohongshu / XHS / RedNote search hot list with title and heat value.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      properties: {},
+    },
+  },
+  {
     name: "xhs-insights__xhs_search_notes",
     remoteName: "xhs_search_notes",
     label: "Search XHS Notes",
-    description: "Search XHS / RedNote notes by keyword with optional sort, note type, and publish-time filters.",
+    description: "Search XHS / RedNote notes by keyword with optional sort, note type, and publish-time filters. When using a returned `note_url`, such as in final answers or display, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -79,7 +90,7 @@ const TOOL_DEFINITIONS = [
     name: "xhs-insights__xhs_get_note_detail_by_note_url",
     remoteName: "xhs_get_note_detail_by_note_url",
     label: "Get XHS Note Detail By URL",
-    description: "Resolve an XHS note link, short link, or share text into structured note details.",
+    description: "Resolve an XHS note link, short link, or share text into structured note details. When using a returned `note_url`, such as in final answers or display, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize a public link from `note_id`.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -96,7 +107,7 @@ const TOOL_DEFINITIONS = [
     name: "xhs-insights__xhs_get_note_detail_by_note_id",
     remoteName: "xhs_get_note_detail_by_note_id",
     label: "Get XHS Note Detail By ID",
-    description: "Fetch structured note details when the caller already has a note ID.",
+    description: "Fetch structured note details when the caller already has a note ID. If a returned `note_url` is available, preserve the full URL exactly, including `xsec_token`; use the returned URL as-is, such as in final answers or display. Do not rebuild links from `note_id`. If `note_url` is null, do not synthesize a public link from `note_id`.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -395,7 +406,7 @@ function extractTextContent(content) {
 export default {
   id: PLUGIN_ID,
   name: PLUGIN_NAME,
-  description: "Social media research and marketing research for Xiaohongshu, XHS, RedNote, and 小红书: search notes, analyze comments, read note details, replies, creator profiles, and creator posts through a hosted read-only MCP service.",
+  description: "Social media research and marketing research for Xiaohongshu, XHS, RedNote, and 小红书: read the search hot list, search notes, analyze comments, read note details, replies, creator profiles, and creator posts through a hosted read-only MCP service.",
   configSchema: CONFIG_SCHEMA,
   register,
 };

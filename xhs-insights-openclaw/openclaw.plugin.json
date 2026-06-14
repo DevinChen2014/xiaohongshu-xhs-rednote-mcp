@@ -1,8 +1,8 @@
 {
   "id": "xhs-insights-openclaw-plugin",
   "name": "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP",
-  "description": "SocialDataX / 社媒数据助手 为小红书 / Xiaohongshu / XHS / RedNote 提供社媒研究支持：笔记搜索、评论分析、笔记详情、评论回复、博主信息和博主笔记。",
-  "version": "0.1.14",
+  "description": "SocialDataX / 社媒数据助手 为小红书 / Xiaohongshu / XHS / RedNote 提供社媒研究支持：搜索热榜、笔记搜索、评论分析、笔记详情、评论回复、博主信息和博主笔记。",
+  "version": "0.1.16",
   "providers": ["xhs-insights"],
   "providerAuthEnvVars": {
     "xhs-insights": ["SOCIALDATAX_API_KEY"]
@@ -60,6 +60,7 @@
   },
   "contracts": {
     "tools": [
+      "xhs-insights__xhs_get_search_hot_list",
       "xhs-insights__xhs_search_notes",
       "xhs-insights__xhs_get_note_detail_by_note_url",
       "xhs-insights__xhs_get_note_detail_by_note_id",
