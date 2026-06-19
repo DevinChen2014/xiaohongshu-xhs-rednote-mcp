@@ -8,7 +8,7 @@ If you are looking for a 小红书 MCP, Xiaohongshu MCP, XHS MCP, or RedNote MCP
 - the hosted `streamable-http` endpoint for clients that support remote MCP
 - an `mcp-remote` fallback example for command/stdio-only MCP clients
 
-The business implementation is privately hosted. This repository exposes only the public connection surface for read-only social media intelligence workflows.
+The business implementation is privately hosted. This repository exposes only the public connection surface for social media content intelligence workflows.
 
 ## Search Aliases
 
@@ -32,7 +32,7 @@ Common search phrases for this MCP service:
 - Hosted transport: `streamable-http`
 - Authentication: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
 - Product: `SocialDataX` / `社媒数据助手`
-- Website: <https://socialdatax.com>
+- Website: <https://socialdatax.52choujiang.com>
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
 - Current public capability version: `0.1.6`
@@ -41,9 +41,9 @@ Common search phrases for this MCP service:
 
 Use the hosted `streamable-http` endpoint directly from clients that support authenticated remote MCP. For clients that only support command/stdio MCP servers, use `mcp-remote` as a local compatibility proxy.
 
-## Read-Only Scope
+## Workflow Scope
 
-This MCP service is designed for read-only social media intelligence workflows. It does not provide account login, posting, editing, liking, commenting, or other account actions.
+This MCP service is designed for social media content intelligence workflows. It does not provide account login, posting, editing, liking, commenting, or other account actions.
 
 Supported workflows include:
 
@@ -55,22 +55,26 @@ Supported workflows include:
 - Fetch paginated replies under a first-level comment.
 - Read creator profile data from a profile link, short link, share text, or user ID.
 - Fetch paginated creator note lists from a user ID, profile link, short link, or share text for content style and account research.
+- Submit a video note speech-to-text transcript task; submit tools 提交完成后最多短等 15 秒, and unfinished jobs can be polled by `job_id`.
 
 ## Tools
 
 | Tool | Public purpose |
 | --- | --- |
-| `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, and publish-time filters. |
+| `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, and publish-time filters. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. |
 | `xhs_get_search_hot_list` | Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value. |
-| `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, or share text into structured note details. |
-| `xhs_get_note_detail_by_note_id` | Fetch structured note details when the caller already has a note ID. |
-| `xhs_get_note_comments_by_note_id` | Fetch paginated first-level comments when the caller already has a note ID. |
-| `xhs_get_note_comments_by_note_url` | Fetch paginated first-level comments directly from a shared note URL, short link, or share text. |
-| `xhs_get_note_sub_comments_by_comment_id` | Fetch paginated replies under a first-level comment by note ID and comment ID. |
+| `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, or share text into structured note details. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize or rebuild a public link from `note_id`. |
+| `xhs_get_note_detail_by_note_id` | Fetch structured note details when the caller already has a note ID. If `note_url` is returned, preserve the full URL exactly in every use, such as final answers, display, references, storage, output, or forwarding, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize or rebuild a public link from `note_id`. |
+| `xhs_get_note_comments_by_note_id` | Fetch paginated first-level comments when the caller already has a note ID. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_get_note_comments_by_note_url` | Fetch paginated first-level comments directly from a shared note URL, short link, or share text. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_get_note_sub_comments_by_comment_id` | Fetch paginated replies under a first-level comment by note ID and comment ID. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
 | `xhs_get_user_info_by_user_id` | Fetch creator profile data when the caller already has a user ID. |
 | `xhs_get_user_info_by_profile_url` | Resolve a profile link, short link, or share text into creator profile data. |
-| `xhs_get_user_posted_notes_by_user_id` | Fetch a paginated list of notes published by a creator when the caller already has a user ID. |
-| `xhs_get_user_posted_notes_by_profile_url` | Fetch a paginated list of notes published by a creator from a profile link, short link, or share text. |
+| `xhs_get_user_posted_notes_by_user_id` | Fetch a paginated list of notes published by a creator when the caller already has a user ID. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_get_user_posted_notes_by_profile_url` | Fetch a paginated list of notes published by a creator from a profile link, short link, or share text. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_submit_video_speech_text_by_note_url` | Submit a video note speech-to-text transcript task from a note link, short link, or share text. 提交完成后最多短等 15 秒. |
+| `xhs_submit_video_speech_text_by_note_id` | Submit a video note speech-to-text transcript task from a `note_id`. 提交完成后最多短等 15 秒. |
+| `xhs_get_video_speech_text_job` | Check a video note speech-to-text transcript job by `job_id` without creating a new task. This v1 surface returns transcript only, not summary. |
 
 ## Quick Start
 
@@ -114,8 +118,10 @@ For command/stdio-only MCP clients, use `mcp-remote`:
 Claude Code can use remote HTTP directly:
 
 ```bash
-claude mcp add --transport http --header "Authorization: Bearer <SOCIALDATAX_API_KEY>" socialdatax-xhs https://mcp.52choujiang.com/xhs/mcp
+claude mcp add --transport http socialdatax-xhs https://mcp.52choujiang.com/xhs/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'
 ```
+
+Persist `SOCIALDATAX_API_KEY` in the runtime environment or client Secret before restarting Claude Code.
 
 Claude Desktop should use its remote MCP / Connectors UI when available. If a local configuration file in your version only supports command/stdio servers, use the `mcp-remote` fallback.
 
@@ -133,7 +139,7 @@ Configuration examples are available in [examples](examples/):
 
 Request or manage API access from the product website:
 
-<https://socialdatax.com>
+<https://socialdatax.52choujiang.com>
 
 Use the key as a Bearer token in the `Authorization` request header. Do not commit real API keys to code, docs, issues, or screenshots.
 
