@@ -11,7 +11,7 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 - Optional expansion topics: `social-insights`, `marketing-research`, `comment-analysis`
 - Root README title: `小红书 MCP | Xiaohongshu MCP | XHS MCP | RedNote MCP`
 - Product: `SocialDataX` / `社媒数据助手`
-- Website: `https://socialdatax.52choujiang.com`
+- Website: `https://socialdatax.com`
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
 - Hosted MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
@@ -49,6 +49,7 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 - Hosted streamable HTTP clients can connect directly to `https://mcp.52choujiang.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
 - With a valid key, hosted MCP `tools/list` returns the current 14 public tools.
+- `xhs_submit_video_speech_text_by_note_url`, `xhs_submit_video_speech_text_by_note_id`, and `xhs_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
 - `examples/codex_config.toml` uses remote HTTP URL and `bearer_token_env_var`, not `mcp-remote`.
 - `examples/cursor_mcp.json` uses remote HTTP URL and `headers` with `${env:SOCIALDATAX_API_KEY}`, not `mcp-remote`.
 - `mcp.json` is explicitly command/stdio fallback and uses `mcp-remote`.

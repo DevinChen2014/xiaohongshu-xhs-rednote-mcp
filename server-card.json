@@ -3,8 +3,8 @@
   "name": "com.52choujiang/xhs-insights",
   "title": "SocialDataX 小红书 Xiaohongshu XHS RedNote MCP",
   "description": "小红书 / Xiaohongshu / XHS / RedNote MCP for filtered note search, search hot list, details, comments, comment replies, creator profiles, creator notes, and speech-to-text transcript.",
-  "version": "0.1.6",
-  "website": "https://socialdatax.52choujiang.com",
+  "version": "0.1.7",
+  "website": "https://socialdatax.com",
   "remotes": [
     {
       "type": "streamable-http",
