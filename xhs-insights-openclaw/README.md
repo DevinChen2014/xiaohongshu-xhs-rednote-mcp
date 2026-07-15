@@ -4,23 +4,23 @@ This directory contains an OpenClaw native plugin shim for the hosted 小红书 
 
 The plugin registers namespaced OpenClaw tools and forwards each call to a remote, read-only `streamable-http` MCP endpoint:
 
-- Endpoint: `https://mcp.52choujiang.com/xhs/mcp`
+- Endpoint: `https://mcp.socialdatax.com/xhs/mcp`
 - API key environment variable: `SOCIALDATAX_API_KEY`
 - Product: `SocialDataX` / `社媒数据助手`
-- Website: <https://socialdatax.52choujiang.com>
+- Website: <https://socialdatax.com>
 - Package name: `xhs-insights-openclaw-plugin`
-- Version: `0.1.17`
+- Version: `0.1.19`
 - Search terms: Xiaohongshu, XHS, RedNote, 小红书, 小红书搜索热榜, search hot list, social media research, marketing research, comments, creator profiles
 
 ## Capabilities
 
 The hosted XHS MCP supports read-only Xiaohongshu / XHS / RedNote workflows:
 
-- Search notes by keyword with optional sort, note type, and publish-time filters.
+- Search notes by keyword with optional sort, note type, publish-time filters, and `page_token` continuation.
 - Fetch the Xiaohongshu / XHS / RedNote search hot list with title and heat value.
 - Resolve shared note links, short links, or share text into structured details.
 - Fetch note details directly when a note ID is already known.
-- Fetch note details, first-level comments, and comment replies.
+- Fetch note details, first-level comments with optional comment sort, and comment replies.
 - Read creator profile information.
 - Fetch creator note lists for content style and account research.
 
@@ -53,7 +53,7 @@ The key is sent as:
 Authorization: Bearer ${SOCIALDATAX_API_KEY}
 ```
 
-The plugin sends the key only to the fixed endpoint `https://mcp.52choujiang.com/xhs/mcp`. It does not support overriding the endpoint URL.
+The plugin sends the key only to the fixed endpoint `https://mcp.socialdatax.com/xhs/mcp`. It does not support overriding the endpoint URL.
 
 Do not commit real API keys to code, docs, issues, or screenshots.
 
@@ -76,7 +76,7 @@ clawhub package publish <public-checkout>/xhs-insights-openclaw \
   --family code-plugin \
   --name xhs-insights-openclaw-plugin \
   --display-name "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP" \
-  --version 0.1.17 \
+  --version 0.1.19 \
   --source-repo <public-owner/public-repo> \
   --source-commit <public-commit-sha> \
   --source-path xhs-insights-openclaw \

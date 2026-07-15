@@ -1,7 +1,7 @@
 const PLUGIN_ID = "xhs-insights-openclaw-plugin";
 const PLUGIN_NAME = "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP";
-const PLUGIN_VERSION = "0.1.17";
-const DEFAULT_ENDPOINT_URL = "https://mcp.52choujiang.com/xhs/mcp";
+const PLUGIN_VERSION = "0.1.19";
+const DEFAULT_ENDPOINT_URL = "https://mcp.socialdatax.com/xhs/mcp";
 const DEFAULT_API_KEY_ENV = "SOCIALDATAX_API_KEY";
 const LEGACY_API_KEY_ENV = "SOCIAL_MEDIA_MCP_API_KEY";
 const API_KEY_ENV_NAMES = [DEFAULT_API_KEY_ENV, LEGACY_API_KEY_ENV];
@@ -24,7 +24,7 @@ const CONFIG_SCHEMA = {
 const PAGE_TOKEN_PROPERTY = {
   type: "string",
   default: "",
-  description: "Pagination token. Leave empty for the first page; pass the previous next_page_token to continue.",
+  description: "Opaque pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
 };
 
 const TOOL_DEFINITIONS = [
@@ -53,12 +53,7 @@ const TOOL_DEFINITIONS = [
           type: "string",
           description: "XHS search keyword.",
         },
-        page: {
-          type: "integer",
-          minimum: 1,
-          default: 1,
-          description: "Search result page number, starting from 1.",
-        },
+        page_token: PAGE_TOKEN_PROPERTY,
         sort_type: {
           type: "string",
           enum: [
@@ -124,7 +119,7 @@ const TOOL_DEFINITIONS = [
     name: "xhs-insights__xhs_get_note_comments_by_note_id",
     remoteName: "xhs_get_note_comments_by_note_id",
     label: "Get XHS Note Comments By ID",
-    description: "Fetch paginated first-level comments when the caller already has a note ID.",
+    description: "Fetch paginated first-level comments when the caller already has a note ID, with optional comment sort.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -135,6 +130,12 @@ const TOOL_DEFINITIONS = [
           description: "XHS note ID.",
         },
         page_token: PAGE_TOKEN_PROPERTY,
+        sort_type: {
+          type: "string",
+          enum: ["default", "time_descending", "like_count_descending"],
+          default: "default",
+          description: "Comment sort order: default (platform default), time_descending (newest first), or like_count_descending (most liked first).",
+        },
       },
     },
   },
@@ -142,7 +143,7 @@ const TOOL_DEFINITIONS = [
     name: "xhs-insights__xhs_get_note_comments_by_note_url",
     remoteName: "xhs_get_note_comments_by_note_url",
     label: "Get XHS Note Comments By URL",
-    description: "Fetch paginated first-level comments from an XHS note URL, short link, or share text.",
+    description: "Fetch paginated first-level comments from an XHS note URL, short link, or share text, with optional comment sort.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -153,6 +154,12 @@ const TOOL_DEFINITIONS = [
           description: "XHS note URL, xhslink.com short link, or share text.",
         },
         page_token: PAGE_TOKEN_PROPERTY,
+        sort_type: {
+          type: "string",
+          enum: ["default", "time_descending", "like_count_descending"],
+          default: "default",
+          description: "Comment sort order: default (platform default), time_descending (newest first), or like_count_descending (most liked first).",
+        },
       },
     },
   },
