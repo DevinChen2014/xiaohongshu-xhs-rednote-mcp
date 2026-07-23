@@ -1,6 +1,6 @@
 const PLUGIN_ID = "xhs-insights-openclaw-plugin";
 const PLUGIN_NAME = "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP";
-const PLUGIN_VERSION = "0.1.19";
+const PLUGIN_VERSION = "0.1.20";
 const DEFAULT_ENDPOINT_URL = "https://mcp.socialdatax.com/xhs/mcp";
 const DEFAULT_API_KEY_ENV = "SOCIALDATAX_API_KEY";
 const LEGACY_API_KEY_ENV = "SOCIAL_MEDIA_MCP_API_KEY";
@@ -93,7 +93,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         note_url: {
           type: "string",
-          description: "XHS note URL, xhslink.com short link, or share text.",
+          description: "XHS note URL, xhslink.com/xhslink.cn short link, or share text.",
         },
       },
     },
@@ -119,7 +119,7 @@ const TOOL_DEFINITIONS = [
     name: "xhs-insights__xhs_get_note_comments_by_note_id",
     remoteName: "xhs_get_note_comments_by_note_id",
     label: "Get XHS Note Comments By ID",
-    description: "Fetch paginated first-level comments when the caller already has a note ID, with optional comment sort.",
+    description: "Fetch paginated first-level comments when the caller already has a note ID; accepts optional comment sort_type.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -143,7 +143,7 @@ const TOOL_DEFINITIONS = [
     name: "xhs-insights__xhs_get_note_comments_by_note_url",
     remoteName: "xhs_get_note_comments_by_note_url",
     label: "Get XHS Note Comments By URL",
-    description: "Fetch paginated first-level comments from an XHS note URL, short link, or share text, with optional comment sort.",
+    description: "Fetch paginated first-level comments from an XHS note URL, short link, or share text; accepts optional comment sort_type.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -151,7 +151,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         note_url: {
           type: "string",
-          description: "XHS note URL, xhslink.com short link, or share text.",
+          description: "XHS note URL, xhslink.com/xhslink.cn short link, or share text.",
         },
         page_token: PAGE_TOKEN_PROPERTY,
         sort_type: {
@@ -214,7 +214,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         profile_url: {
           type: "string",
-          description: "XHS profile URL, xhslink.com short link, or share text.",
+          description: "XHS profile URL, xhslink.com/xhslink.cn short link, or share text.",
         },
       },
     },
@@ -249,7 +249,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         profile_url: {
           type: "string",
-          description: "XHS profile URL, xhslink.com short link, or share text.",
+          description: "XHS profile URL, xhslink.com/xhslink.cn short link, or share text.",
         },
         page_token: PAGE_TOKEN_PROPERTY,
       },
