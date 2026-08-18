@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "socialdatax-xhs": {
-      "url": "https://mcp.52choujiang.com/xhs/mcp",
+      "url": "https://mcp.socialdatax.com/xhs/mcp",
       "headers": {
         "Authorization": "Bearer ${env:SOCIALDATAX_API_KEY}"
       }

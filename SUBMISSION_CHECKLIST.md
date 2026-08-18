@@ -1,12 +1,12 @@
 # MCP Directory Submission Checklist
 
-Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry.
+Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The `0.1.8` PGY production surface was verified on 2026-08-14: hosted `tools/list`, server-card, public HTTP catalog, and OpenAPI all expose `xhs_pgy_get_note_detail`. The official Registry is synced; public repository sync remains a separate release action.
 
 ## Public Repository
 
 - Repository name: `xiaohongshu-xhs-rednote-mcp`
 - Repository URL: `https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp`
-- Repository description: `小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP for filtered note search, note details, comments, comment replies, creator profiles, and creator note lists.`
+- Repository description: `小红书 MCP / Xiaohongshu MCP / XHS MCP / RedNote MCP for filtered note search, product search, product details, product reviews, PGY enhanced note details, note details, comments, comment replies, creator profiles, and creator note lists. PGY successful calls cost 20 points and failures are not charged.`
 - Current repository topics: `mcp`, `mcp-server`, `xiaohongshu`, `xiaohongshu-mcp`, `xhs`, `xhs-mcp`, `rednote`, `rednote-mcp`
 - Optional expansion topics: `social-insights`, `marketing-research`, `comment-analysis`
 - Root README title: `小红书 MCP | Xiaohongshu MCP | XHS MCP | RedNote MCP`
@@ -14,15 +14,15 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 - Website: `https://socialdatax.com`
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
-- Hosted MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
+- Hosted MCP endpoint: `https://mcp.socialdatax.com/xhs/mcp`
 - Hosted auth: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
 - Default client transport: hosted `streamable-http`
-- Command/stdio fallback: `npx -y mcp-remote https://mcp.52choujiang.com/xhs/mcp --header "Authorization: Bearer <SOCIALDATAX_API_KEY>"`
+- Command/stdio fallback: `npx -y mcp-remote https://mcp.socialdatax.com/xhs/mcp --header "Authorization: Bearer <SOCIALDATAX_API_KEY>"`
 - License: MIT for the public documentation and examples only
 
 ## Safety Checks
 
-- No real API keys are present.
+- No real API Key values are present.
 - No private backend implementation is included.
 - No production configuration is included.
 - No internal samples are included.
@@ -46,9 +46,11 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 
 ## Glama Checks
 
-- Hosted streamable HTTP clients can connect directly to `https://mcp.52choujiang.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
+- Hosted streamable HTTP clients can connect directly to `https://mcp.socialdatax.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- With a valid key, hosted MCP `tools/list` returns the current 14 public tools.
+- With a valid key, hosted MCP `tools/list` returns the current 20 public tools.
+- `xhs_pgy_get_note_detail` is present in `tools/list` and its description states the 20-point successful-call cost and that failures are not charged.
+- `xhs_get_product_reviews` is present in `tools/list`.
 - `xhs_submit_video_speech_text_by_note_url`, `xhs_submit_video_speech_text_by_note_id`, and `xhs_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
 - `examples/codex_config.toml` uses remote HTTP URL and `bearer_token_env_var`, not `mcp-remote`.
 - `examples/cursor_mcp.json` uses remote HTTP URL and `headers` with `${env:SOCIALDATAX_API_KEY}`, not `mcp-remote`.

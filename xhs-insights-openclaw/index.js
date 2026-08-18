@@ -1,6 +1,6 @@
 const PLUGIN_ID = "xhs-insights-openclaw-plugin";
 const PLUGIN_NAME = "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP";
-const PLUGIN_VERSION = "0.1.21";
+const PLUGIN_VERSION = "0.1.22";
 const DEFAULT_ENDPOINT_URL = "https://mcp.socialdatax.com/xhs/mcp";
 const DEFAULT_API_KEY_ENV = "SOCIALDATAX_API_KEY";
 const LEGACY_API_KEY_ENV = "SOCIAL_MEDIA_MCP_API_KEY";
@@ -21,10 +21,46 @@ const CONFIG_SCHEMA = {
   },
 };
 
-const PAGE_TOKEN_PROPERTY = {
+const NOTE_SEARCH_PAGE_TOKEN_PROPERTY = {
   type: "string",
   default: "",
-  description: "Opaque pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
+  description: "Opaque note search pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same note search keyword, sort_type, note_type, publish_time_range, and caller. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
+};
+
+const PRODUCT_SEARCH_PAGE_TOKEN_PROPERTY = {
+  type: "string",
+  default: "",
+  description: "Opaque product search pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same product keyword and caller. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
+};
+
+const PRODUCT_REVIEW_PAGE_TOKEN_PROPERTY = {
+  type: "string",
+  default: "",
+  description: "Opaque product review pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same product SKU, sort_type, image filter, and caller. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
+};
+
+const COMMENT_PAGE_TOKEN_PROPERTY = {
+  type: "string",
+  default: "",
+  description: "Opaque first-level comment pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same note and comment sort_type. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
+};
+
+const SUB_COMMENT_PAGE_TOKEN_PROPERTY = {
+  type: "string",
+  default: "",
+  description: "Opaque comment reply pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same note and first-level comment. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
+};
+
+const USER_POSTED_PAGE_TOKEN_PROPERTY = {
+  type: "string",
+  default: "",
+  description: "Opaque creator note list pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same creator. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
+};
+
+const TOPIC_NOTES_PAGE_TOKEN_PROPERTY = {
+  type: "string",
+  default: "",
+  description: "Opaque tag page note list pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same tag page and sort_type. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
 };
 
 const TOOL_DEFINITIONS = [
@@ -53,7 +89,7 @@ const TOOL_DEFINITIONS = [
           type: "string",
           description: "XHS search keyword.",
         },
-        page_token: PAGE_TOKEN_PROPERTY,
+        page_token: NOTE_SEARCH_PAGE_TOKEN_PROPERTY,
         sort_type: {
           type: "string",
           enum: [
@@ -82,6 +118,70 @@ const TOOL_DEFINITIONS = [
     },
   },
   {
+    name: "xhs-insights__xhs_search_products",
+    remoteName: "xhs_search_products",
+    label: "Search XHS Products",
+    description: "Search Xiaohongshu products by keyword with page_token continuation. To continue product search pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["keyword"],
+      properties: {
+        keyword: {
+          type: "string",
+          description: "XHS product search keyword.",
+        },
+        page_token: PRODUCT_SEARCH_PAGE_TOKEN_PROPERTY,
+      },
+    },
+  },
+  {
+    name: "xhs-insights__xhs_get_product_detail",
+    remoteName: "xhs_get_product_detail",
+    label: "Get XHS Product Detail",
+    description: "Fetch Xiaohongshu product details by sku_id copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["sku_id"],
+      properties: {
+        sku_id: {
+          type: "string",
+          description: "XHS product SKU ID copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords.",
+        },
+      },
+    },
+  },
+  {
+    name: "xhs-insights__xhs_get_product_reviews",
+    remoteName: "xhs_get_product_reviews",
+    label: "Get XHS Product Reviews",
+    description: "Fetch Xiaohongshu product reviews by sku_id copied from xhs_search_products results; accepts sort_type: general (comprehensive sort, the default) or time_descending, has_image, and page_token continuation. This tool does not accept spu_id, product links, or search keywords.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["sku_id"],
+      properties: {
+        sku_id: {
+          type: "string",
+          description: "XHS product SKU ID copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords.",
+        },
+        page_token: PRODUCT_REVIEW_PAGE_TOKEN_PROPERTY,
+        sort_type: {
+          type: "string",
+          enum: ["general", "time_descending"],
+          default: "general",
+          description: "Product review sort order: general (comprehensive sort, the default) or time_descending (latest first).",
+        },
+        has_image: {
+          type: "boolean",
+          default: false,
+          description: "Whether to return only product reviews with images.",
+        },
+      },
+    },
+  },
+  {
     name: "xhs-insights__xhs_get_note_detail_by_note_url",
     remoteName: "xhs_get_note_detail_by_note_url",
     label: "Get XHS Note Detail By URL",
@@ -93,7 +193,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         note_url: {
           type: "string",
-          description: "XHS note URL, xhslink.com/xhslink.cn short link, or share text.",
+          description: "XHS note URL, supported XHS short link, or share text.",
         },
       },
     },
@@ -129,7 +229,7 @@ const TOOL_DEFINITIONS = [
           type: "string",
           description: "XHS note ID.",
         },
-        page_token: PAGE_TOKEN_PROPERTY,
+        page_token: COMMENT_PAGE_TOKEN_PROPERTY,
         sort_type: {
           type: "string",
           enum: ["default", "time_descending", "like_count_descending"],
@@ -151,9 +251,9 @@ const TOOL_DEFINITIONS = [
       properties: {
         note_url: {
           type: "string",
-          description: "XHS note URL, xhslink.com/xhslink.cn short link, or share text.",
+          description: "XHS note URL, supported XHS short link, or share text.",
         },
-        page_token: PAGE_TOKEN_PROPERTY,
+        page_token: COMMENT_PAGE_TOKEN_PROPERTY,
         sort_type: {
           type: "string",
           enum: ["default", "time_descending", "like_count_descending"],
@@ -181,7 +281,7 @@ const TOOL_DEFINITIONS = [
           type: "string",
           description: "First-level comment ID.",
         },
-        page_token: PAGE_TOKEN_PROPERTY,
+        page_token: SUB_COMMENT_PAGE_TOKEN_PROPERTY,
       },
     },
   },
@@ -214,7 +314,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         profile_url: {
           type: "string",
-          description: "XHS profile URL, xhslink.com/xhslink.cn short link, or share text.",
+          description: "XHS profile URL, supported XHS short link, or share text.",
         },
       },
     },
@@ -233,7 +333,7 @@ const TOOL_DEFINITIONS = [
           type: "string",
           description: "XHS user ID.",
         },
-        page_token: PAGE_TOKEN_PROPERTY,
+        page_token: USER_POSTED_PAGE_TOKEN_PROPERTY,
       },
     },
   },
@@ -249,9 +349,57 @@ const TOOL_DEFINITIONS = [
       properties: {
         profile_url: {
           type: "string",
-          description: "XHS profile URL, xhslink.com/xhslink.cn short link, or share text.",
+          description: "XHS profile URL, supported XHS short link, or share text.",
         },
-        page_token: PAGE_TOKEN_PROPERTY,
+        page_token: USER_POSTED_PAGE_TOKEN_PROPERTY,
+      },
+    },
+  },
+  {
+    name: "xhs-insights__xhs_get_topic_notes_by_topic_url",
+    remoteName: "xhs_get_topic_notes_by_topic_url",
+    label: "Get XHS Tag Page Notes By URL",
+    description: "Fetch a paginated XHS tag page note list from a topic URL, short link, or share text; accepts sort_type.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["topic_url"],
+      properties: {
+        topic_url: {
+          type: "string",
+          description: "XHS topic URL, supported XHS short link, or share text.",
+        },
+        page_token: TOPIC_NOTES_PAGE_TOKEN_PROPERTY,
+        sort_type: {
+          type: "string",
+          enum: ["hot", "time_descending"],
+          default: "hot",
+          description: "Tag page note sort order: hot (default) or time_descending (latest first).",
+        },
+      },
+    },
+  },
+  {
+    name: "xhs-insights__xhs_get_topic_notes_by_page_id",
+    remoteName: "xhs_get_topic_notes_by_page_id",
+    label: "Get XHS Tag Page Notes By Page ID",
+    description: "Fetch a paginated XHS tag page note list when the caller already has the tag page page_id; accepts sort_type.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["page_id"],
+      properties: {
+        page_id: {
+          type: "string",
+          description: "XHS tag page page_id.",
+        },
+        page_token: TOPIC_NOTES_PAGE_TOKEN_PROPERTY,
+        sort_type: {
+          type: "string",
+          enum: ["hot", "time_descending"],
+          default: "hot",
+          description: "Tag page note sort order: hot (default) or time_descending (latest first).",
+        },
       },
     },
   },
@@ -413,7 +561,7 @@ function extractTextContent(content) {
 export default {
   id: PLUGIN_ID,
   name: PLUGIN_NAME,
-  description: "Social media research and marketing research for Xiaohongshu, XHS, RedNote, and 小红书: read the search hot list, search notes, analyze comments, read note details, replies, creator profiles, and creator posts through a hosted read-only MCP service.",
+  description: "Social media research and marketing research for Xiaohongshu, XHS, RedNote, and 小红书: read the search hot list, search notes and products, fetch product details and product reviews, analyze comments, read note details, replies, creator profiles, and creator posts through a hosted MCP service.",
   configSchema: CONFIG_SCHEMA,
   register,
 };

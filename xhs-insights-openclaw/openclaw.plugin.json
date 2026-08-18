@@ -1,8 +1,8 @@
 {
   "id": "xhs-insights-openclaw-plugin",
   "name": "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP",
-  "description": "SocialDataX / 社媒数据助手 为小红书 / Xiaohongshu / XHS / RedNote 提供社媒研究支持：搜索热榜、笔记搜索、评论分析、笔记详情、评论回复、博主信息和博主笔记。",
-  "version": "0.1.21",
+  "description": "SocialDataX / 社媒数据助手 为小红书 / Xiaohongshu / XHS / RedNote 提供社媒研究支持：搜索热榜、笔记搜索、商品搜索、商品详情、商品评价、标签页笔记、评论分析、笔记详情、评论回复、博主信息和博主笔记。",
+  "version": "0.1.22",
   "providers": ["xhs-insights"],
   "providerAuthEnvVars": {
     "xhs-insights": ["SOCIALDATAX_API_KEY"]
@@ -62,6 +62,9 @@
     "tools": [
       "xhs-insights__xhs_get_search_hot_list",
       "xhs-insights__xhs_search_notes",
+      "xhs-insights__xhs_search_products",
+      "xhs-insights__xhs_get_product_detail",
+      "xhs-insights__xhs_get_product_reviews",
       "xhs-insights__xhs_get_note_detail_by_note_url",
       "xhs-insights__xhs_get_note_detail_by_note_id",
       "xhs-insights__xhs_get_note_comments_by_note_id",
@@ -70,7 +73,9 @@
       "xhs-insights__xhs_get_user_info_by_user_id",
       "xhs-insights__xhs_get_user_info_by_profile_url",
       "xhs-insights__xhs_get_user_posted_notes_by_user_id",
-      "xhs-insights__xhs_get_user_posted_notes_by_profile_url"
+      "xhs-insights__xhs_get_user_posted_notes_by_profile_url",
+      "xhs-insights__xhs_get_topic_notes_by_topic_url",
+      "xhs-insights__xhs_get_topic_notes_by_page_id"
     ]
   },
   "configSchema": {

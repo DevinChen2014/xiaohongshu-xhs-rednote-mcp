@@ -4,7 +4,7 @@ import { spawn } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const DEFAULT_UPSTREAM_URL = "https://mcp.52choujiang.com/xhs/mcp";
+const DEFAULT_UPSTREAM_URL = "https://mcp.socialdatax.com/xhs/mcp";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const remoteEntry = join(

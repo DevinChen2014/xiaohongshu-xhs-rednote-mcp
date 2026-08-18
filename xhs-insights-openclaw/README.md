@@ -2,27 +2,31 @@
 
 This directory contains an OpenClaw native plugin shim for the hosted 小红书 MCP service by SocialDataX.
 
-The plugin registers namespaced OpenClaw tools and forwards each call to a remote, read-only `streamable-http` MCP endpoint:
+The plugin registers namespaced OpenClaw tools and forwards each call to the hosted `streamable-http` MCP endpoint:
 
 - Endpoint: `https://mcp.socialdatax.com/xhs/mcp`
 - API key environment variable: `SOCIALDATAX_API_KEY`
 - Product: `SocialDataX` / `社媒数据助手`
 - Website: <https://socialdatax.com>
 - Package name: `xhs-insights-openclaw-plugin`
-- Version: `0.1.21`
-- Search terms: Xiaohongshu, XHS, RedNote, 小红书, 小红书搜索热榜, search hot list, social media research, marketing research, comments, creator profiles
+- Version: `0.1.22`
+- Search terms: Xiaohongshu, XHS, RedNote, 小红书, 小红书搜索热榜, 小红书商品搜索, 小红书商品评价, search hot list, product search, product reviews, social media research, marketing research, comments, creator profiles
 
 ## Capabilities
 
-The hosted XHS MCP supports read-only Xiaohongshu / XHS / RedNote workflows:
+This OpenClaw plugin exposes read-only Xiaohongshu / XHS / RedNote workflows:
 
 - Search notes by keyword with optional sort, note type, publish-time filters, and `page_token` continuation.
+- Search products by keyword with `page_token` continuation.
+- Fetch product details by `sku_id` copied from product search results.
+- Fetch product reviews by `sku_id` copied from product search results; accepts `sort_type`: `general` (comprehensive sort, the default) or `time_descending`, `has_image`, and `page_token` continuation.
 - Fetch the Xiaohongshu / XHS / RedNote search hot list with title and heat value.
 - Resolve shared note links, short links, or share text into structured details.
 - Fetch note details directly when a note ID is already known.
 - Fetch note details, first-level comments, and comment replies.
 - Read creator profile information.
 - Fetch creator note lists for content style and account research.
+- Fetch tag page note lists from a topic URL, short link, share text, or page ID.
 
 For XHS outputs with a returned `note_url` field: When `note_url` is non-null, preserve the full URL exactly, including `xsec_token`, such as in final answers or display; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize a public link from `note_id`.
 
@@ -76,7 +80,7 @@ clawhub package publish <public-checkout>/xhs-insights-openclaw \
   --family code-plugin \
   --name xhs-insights-openclaw-plugin \
   --display-name "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP" \
-  --version 0.1.21 \
+  --version 0.1.22 \
   --source-repo <public-owner/public-repo> \
   --source-commit <public-commit-sha> \
   --source-path xhs-insights-openclaw \

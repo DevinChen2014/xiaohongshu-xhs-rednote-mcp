@@ -28,14 +28,14 @@ Common search phrases for this MCP service:
 
 ## Service
 
-- Hosted MCP endpoint: `https://mcp.52choujiang.com/xhs/mcp`
+- Hosted MCP endpoint: `https://mcp.socialdatax.com/xhs/mcp`
 - Hosted transport: `streamable-http`
 - Authentication: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
 - Product: `SocialDataX` / `社媒数据助手`
 - Website: <https://socialdatax.com>
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
-- Current public capability version: `0.1.7`
+- Current public capability version: `0.1.8`; production PGY surface has been verified and official Registry is synced.
 
 ## Platform MCP
 
@@ -48,6 +48,10 @@ This MCP service is designed for social media content intelligence workflows. It
 Supported workflows include:
 
 - Search related Xiaohongshu notes by keyword, with optional sort, note type, and publish-time filters.
+- Search Xiaohongshu products by keyword with page_token continuation.
+- Fetch product details by sku_id copied from product search results.
+- Fetch one PGY / 蒲公英 enhanced note detail by note_id, including content, images, author, exposure, reads, engagement counts, and pricing; successful calls cost 20 points and failures are not charged.
+- Fetch product reviews by sku_id copied from product search results.
 - Read the Xiaohongshu search hot list with title and heat value.
 - Resolve a shared note link, short link, or share text into structured note details.
 - Read note details when the caller already has a note ID.
@@ -55,26 +59,33 @@ Supported workflows include:
 - Fetch paginated replies under a first-level comment.
 - Read creator profile data from a profile link, short link, share text, or user ID.
 - Fetch paginated creator note lists from a user ID, profile link, short link, or share text for content style and account research.
-- Submit a video note speech-to-text transcript task; submit tools 提交完成后最多短等 15 秒, and unfinished jobs can be polled by `job_id`.
+- Fetch paginated tag page note lists from a topic URL, short link, share text, or page ID.
+- Submit a video note speech-to-text transcript task; submit tools 提交完成后最多短等 240 秒, and unfinished jobs should continue polling the same `job_id` until terminal.
 
 ## Tools
 
 | Tool | Public purpose |
 | --- | --- |
-| `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, and publish-time filters. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. |
+| `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, publish-time filters, and `page_token` continuation. To continue search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; omit `page_token` on the first request. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. |
+| `xhs_search_products` | Search Xiaohongshu products by keyword with `page_token` continuation. To continue product search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_get_product_detail` | Fetch Xiaohongshu product details by `sku_id` copied from `xhs_search_products` results. This tool does not accept `spu_id`, product links, or search keywords. |
+| `xhs_pgy_get_note_detail` | Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail by `note_id`, including content, images, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged. |
+| `xhs_get_product_reviews` | Fetch Xiaohongshu product reviews by `sku_id` copied from `xhs_search_products` results; accepts `sort_type`: `general` (comprehensive sort, the default) or `time_descending`, `has_image`, and `page_token` continuation. This tool does not accept `spu_id`, product links, or search keywords. |
 | `xhs_get_search_hot_list` | Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value. |
 | `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, or share text into structured note details. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize or rebuild a public link from `note_id`. |
 | `xhs_get_note_detail_by_note_id` | Fetch structured note details when the caller already has a note ID. If `note_url` is returned, preserve the full URL exactly in every use, such as final answers, display, references, storage, output, or forwarding, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize or rebuild a public link from `note_id`. |
-| `xhs_get_note_comments_by_note_id` | Fetch paginated first-level comments when the caller already has a note ID. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
-| `xhs_get_note_comments_by_note_url` | Fetch paginated first-level comments directly from a shared note URL, short link, or share text. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_get_note_comments_by_note_id` | Fetch paginated first-level comments when the caller already has a note ID; accepts optional comment `sort_type`: `default`, `time_descending`, or `like_count_descending`. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_get_note_comments_by_note_url` | Fetch paginated first-level comments directly from a shared note URL, short link, or share text; accepts optional comment `sort_type`: `default`, `time_descending`, or `like_count_descending`. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
 | `xhs_get_note_sub_comments_by_comment_id` | Fetch paginated replies under a first-level comment by note ID and comment ID. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
 | `xhs_get_user_info_by_user_id` | Fetch creator profile data when the caller already has a user ID. |
 | `xhs_get_user_info_by_profile_url` | Resolve a profile link, short link, or share text into creator profile data. |
 | `xhs_get_user_posted_notes_by_user_id` | Fetch a paginated list of notes published by a creator when the caller already has a user ID. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
 | `xhs_get_user_posted_notes_by_profile_url` | Fetch a paginated list of notes published by a creator from a profile link, short link, or share text. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
-| `xhs_submit_video_speech_text_by_note_url` | Submit a video note speech-to-text transcript task from a note link, short link, or share text. 提交完成后最多短等 15 秒. |
-| `xhs_submit_video_speech_text_by_note_id` | Submit a video note speech-to-text transcript task from a `note_id`. 提交完成后最多短等 15 秒. |
-| `xhs_get_video_speech_text_job` | Check a video note speech-to-text transcript job by `job_id` without creating a new task. This v1 surface returns transcript only, not summary. |
+| `xhs_get_topic_notes_by_topic_url` | Fetch a paginated tag page note list from a topic URL, short link, or share text; accepts `sort_type`: `hot` or `time_descending`. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_get_topic_notes_by_page_id` | Fetch a paginated tag page note list when the caller already has the tag page `page_id`; accepts `sort_type`: `hot` or `time_descending`. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_submit_video_speech_text_by_note_url` | Submit a video note speech-to-text transcript task from a note link, short link, or share text. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
+| `xhs_submit_video_speech_text_by_note_id` | Submit a video note speech-to-text transcript task from a `note_id`. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
+| `xhs_get_video_speech_text_job` | Check a video note speech-to-text transcript job by `job_id` without creating a new task; each call waits up to 240 seconds. If unfinished, continue querying the same `job_id` until terminal. This v1 surface returns transcript plus content context, not summary. |
 
 ## Quick Start
 
@@ -85,7 +96,7 @@ For clients that support authenticated `streamable-http`, use the hosted endpoin
   "mcpServers": {
     "socialdatax-xhs": {
       "type": "streamable_http",
-      "url": "https://mcp.52choujiang.com/xhs/mcp",
+      "url": "https://mcp.socialdatax.com/xhs/mcp",
       "headers": {
         "Authorization": "Bearer <SOCIALDATAX_API_KEY>"
       }
@@ -106,7 +117,7 @@ For command/stdio-only MCP clients, use `mcp-remote`:
       "args": [
         "-y",
         "mcp-remote",
-        "https://mcp.52choujiang.com/xhs/mcp",
+        "https://mcp.socialdatax.com/xhs/mcp",
         "--header",
         "Authorization: Bearer <SOCIALDATAX_API_KEY>"
       ]
@@ -118,7 +129,7 @@ For command/stdio-only MCP clients, use `mcp-remote`:
 Claude Code can use remote HTTP directly:
 
 ```bash
-claude mcp add --transport http socialdatax-xhs https://mcp.52choujiang.com/xhs/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'
+claude mcp add --transport http socialdatax-xhs https://mcp.socialdatax.com/xhs/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'
 ```
 
 Persist `SOCIALDATAX_API_KEY` in the runtime environment or client Secret before restarting Claude Code.
@@ -141,7 +152,7 @@ Request or manage API access from the product website:
 
 <https://socialdatax.com>
 
-Use the key as a Bearer token in the `Authorization` request header. Do not commit real API keys to code, docs, issues, or screenshots.
+Use the key as a Bearer token in the `Authorization` request header. Do not commit real API Key values to code, docs, issues, or screenshots.
 
 ## Directory Metadata
 
