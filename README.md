@@ -35,7 +35,7 @@ Common search phrases for this MCP service:
 - Website: <https://socialdatax.com>
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
-- Current public capability version: `0.1.8`; production PGY surface has been verified and official Registry is synced.
+- Current public capability version: `0.1.9`; the production PGY dual-entry surface is verified and the official Registry is synced.
 
 ## Platform MCP
 
@@ -51,7 +51,7 @@ Supported workflows include:
 - Search related Xiaohongshu notes by keyword, with optional sort, note type, and publish-time filters.
 - Search Xiaohongshu products by keyword with page_token continuation.
 - Fetch product details by sku_id copied from product search results.
-- Fetch one PGY / 蒲公英 enhanced note detail by note_id, including content, images or a video summary, author, exposure, reads, engagement counts, and pricing; successful calls cost 20 points and failures are not charged.
+- Fetch one PGY / 蒲公英 enhanced note detail from either a complete note_id or a note link, short link, or share text; successful calls cost 20 points and failures are not charged.
 - Fetch product reviews by sku_id copied from product search results.
 - Read the Xiaohongshu search hot list with title and heat value.
 - Resolve a shared note link, short link, or share text into structured note details.
@@ -71,7 +71,8 @@ Supported workflows include:
 | `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, publish-time filters, and `page_token` continuation. Use the corresponding detail tool when the caller already has a note link or `note_id` and needs one note's details; use the corresponding URL/ID tool for comments, replies, or speech-to-text. To continue search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; omit `page_token` on the first request. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. |
 | `xhs_search_products` | Search Xiaohongshu products by product name, brand, category, or product-related query, with `page_token` continuation. Use this tool for search terms; if a `sku_id` from search results is already available, use `xhs_get_product_detail` or `xhs_get_product_reviews` instead. Do not use product links, `sku_id`, `spu_id`, or `page_token` as the keyword. To continue product search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
 | `xhs_get_product_detail` | Fetch Xiaohongshu product details by `sku_id` copied from `xhs_search_products` results. This tool does not accept `spu_id`, product links, or search keywords. |
-| `xhs_pgy_get_note_detail` | Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail by `note_id`, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged. |
+| `xhs_pgy_get_note_detail_by_note_id` | Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail when the caller already has a complete `note_id`, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged. |
+| `xhs_pgy_get_note_detail_by_note_url` | Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail from a complete note link, short link, or share text, with the same PGY commercial output. Successful calls cost 20 points and failures are not charged. |
 | `xhs_get_product_reviews` | Fetch Xiaohongshu product reviews by `sku_id` copied from `xhs_search_products` results; accepts `sort_type`: `general` (comprehensive sort, the default) or `time_descending`, `has_image`, and `page_token` continuation. This tool does not accept `spu_id`, product links, or search keywords. |
 | `xhs_get_search_hot_list` | Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value. |
 | `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, or share text into structured note details. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize or rebuild a public link from `note_id`. |

@@ -1,6 +1,6 @@
 # MCP Directory Submission Checklist
 
-Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The `0.1.8` PGY production surface was verified on 2026-08-14: hosted `tools/list`, server-card, public HTTP catalog, and OpenAPI all expose `xhs_pgy_get_note_detail`. The official Registry is synced; public repository sync remains a separate release action.
+Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The `0.1.9` PGY production surface was verified on 2026-08-20: hosted `tools/list` and server-card expose both `xhs_pgy_get_note_detail_by_note_id` and `xhs_pgy_get_note_detail_by_note_url`, the old MCP tool name is absent, and the public HTTP catalog and OpenAPI expose the dual-entry request schema. The official Registry is synced.
 
 ## Public Repository
 
@@ -48,9 +48,8 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 
 - Hosted streamable HTTP clients can connect directly to `https://mcp.socialdatax.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- With a valid key, hosted MCP `tools/list` returns the current 21 public tools.
-- `socialdatax_get_points_balance` is present in `tools/list`.
-- `xhs_pgy_get_note_detail` is present in `tools/list` and its description states the 20-point successful-call cost and that failures are not charged.
+- With a valid key, hosted MCP `tools/list` returns the current 22 public tools.
+- `xhs_pgy_get_note_detail_by_note_id` and `xhs_pgy_get_note_detail_by_note_url` are present in `tools/list`, the old MCP name is absent, and both descriptions state the 20-point successful-call cost and that failures are not charged.
 - `xhs_get_product_reviews` is present in `tools/list`.
 - `xhs_submit_video_speech_text_by_note_url`, `xhs_submit_video_speech_text_by_note_id`, and `xhs_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
 - `examples/codex_config.toml` uses remote HTTP URL and `bearer_token_env_var`, not `mcp-remote`.

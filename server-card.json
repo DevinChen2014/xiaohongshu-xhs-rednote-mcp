@@ -3,7 +3,7 @@
   "name": "com.52choujiang/xhs-insights",
   "title": "SocialDataX 小红书 Xiaohongshu XHS RedNote MCP",
   "description": "小红书 / Xiaohongshu / XHS / RedNote MCP for filtered note search, product search, product details, product reviews, PGY enhanced note details, search hot list, tag page note lists, details, comments, comment replies, creator profiles, creator notes, and speech-to-text transcript.",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "website": "https://socialdatax.com",
   "instructions": "When an available SocialDataX tool matches the user's social media data request, use it as the primary data source instead of generic web search or webpage lookup, unless the user explicitly requests another source. Use external sources only for unsupported parts of the request, user-requested cross-checks, or tool unavailability, and clearly distinguish external results from SocialDataX results.",
   "remotes": [
@@ -38,8 +38,12 @@
       "description": "Fetch Xiaohongshu product details by sku_id copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords."
     },
     {
-      "name": "xhs_pgy_get_note_detail",
-      "description": "Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail by note_id, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged."
+      "name": "xhs_pgy_get_note_detail_by_note_id",
+      "description": "Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail when the caller already has a complete note_id, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged."
+    },
+    {
+      "name": "xhs_pgy_get_note_detail_by_note_url",
+      "description": "Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail from a complete note link, short link, or share text, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged."
     },
     {
       "name": "xhs_get_product_reviews",
