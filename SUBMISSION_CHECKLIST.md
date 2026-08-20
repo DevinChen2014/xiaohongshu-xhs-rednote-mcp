@@ -48,7 +48,8 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 
 - Hosted streamable HTTP clients can connect directly to `https://mcp.socialdatax.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- With a valid key, hosted MCP `tools/list` returns the current 20 public tools.
+- With a valid key, hosted MCP `tools/list` returns the current 21 public tools.
+- `socialdatax_get_points_balance` is present in `tools/list`.
 - `xhs_pgy_get_note_detail` is present in `tools/list` and its description states the 20-point successful-call cost and that failures are not charged.
 - `xhs_get_product_reviews` is present in `tools/list`.
 - `xhs_submit_video_speech_text_by_note_url`, `xhs_submit_video_speech_text_by_note_id`, and `xhs_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
