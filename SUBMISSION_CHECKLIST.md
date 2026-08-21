@@ -1,6 +1,6 @@
 # MCP Directory Submission Checklist
 
-Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The hosted production `tools/list` and server card now expose all 24 tracked tools, including `xhs_search_suggestions`, `xhs_get_product_review_replies`, and both PGY entry tools. Publish and synchronize these materials as `0.1.10`; the official Registry and public GitHub repository remain on `0.1.9` until that release is complete.
+Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The hosted production `tools/list` and server card now expose all 24 tracked tools, including `xhs_search_suggestions`, `xhs_get_product_review_replies`, and both PGY entry tools. The official Registry and public GitHub repository are synchronized at `0.1.10`.
 
 ## Public Repository
 
