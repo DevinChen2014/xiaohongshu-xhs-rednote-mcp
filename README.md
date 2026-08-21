@@ -35,7 +35,7 @@ Common search phrases for this MCP service:
 - Website and API Key access: <https://socialdatax.com/ai?from=github>
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
-- Current public capability version: `0.1.9`; the production PGY dual-entry surface is verified and the official Registry is synced.
+- Current public capability version: `0.1.10`; the hosted production `tools/list` and server card expose all 24 tracked tools, including `xhs_search_suggestions`, `xhs_get_product_review_replies`, and both PGY entry tools. The official Registry and public GitHub repository remain on `0.1.9` until this `0.1.10` material is published and synchronized.
 
 ## Platform MCP
 
@@ -54,6 +54,7 @@ Supported workflows include:
 - Fetch one PGY / 蒲公英 enhanced note detail from either a complete note_id or a note link, short link, or share text; successful calls cost 20 points and failures are not charged.
 - Fetch product reviews by sku_id copied from product search results.
 - Read the Xiaohongshu search hot list with title and heat value.
+- Read Xiaohongshu search suggestions for a keyword or partial phrase.
 - Resolve a shared note link, short link, or share text into structured note details.
 - Read note details when the caller already has a note ID.
 - Fetch paginated first-level comments for comment analysis.
@@ -74,7 +75,9 @@ Supported workflows include:
 | `xhs_pgy_get_note_detail_by_note_id` | Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail when the caller already has a complete `note_id`, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged. |
 | `xhs_pgy_get_note_detail_by_note_url` | Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail from a complete note link, short link, or share text, with the same PGY commercial output. Successful calls cost 20 points and failures are not charged. |
 | `xhs_get_product_reviews` | Fetch Xiaohongshu product reviews by `sku_id` copied from `xhs_search_products` results; accepts `sort_type`: `general` (comprehensive sort, the default) or `time_descending`, `has_image`, and `page_token` continuation. This tool does not accept `spu_id`, product links, or search keywords. |
+| `xhs_get_product_review_replies` | Fetch replies under a first-level Xiaohongshu product review by copying `review_id` from `xhs_get_product_reviews`; accepts opaque `page_token` continuation and does not accept `root_review_id`. |
 | `xhs_get_search_hot_list` | Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value. |
+| `xhs_search_suggestions` | Get Xiaohongshu / 小红书 search suggestions for a keyword or partial phrase, including suggestion text, search target, and an optional description. |
 | `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, or share text into structured note details. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize or rebuild a public link from `note_id`. |
 | `xhs_get_note_detail_by_note_id` | Fetch structured note details when the caller already has a note ID. If `note_url` is returned, preserve the full URL exactly in every use, such as final answers, display, references, storage, output, or forwarding, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize or rebuild a public link from `note_id`. |
 | `xhs_get_note_comments_by_note_id` | Fetch paginated first-level comments when the caller already has a note ID; accepts optional comment `sort_type`: `default`, `time_descending`, or `like_count_descending`. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |

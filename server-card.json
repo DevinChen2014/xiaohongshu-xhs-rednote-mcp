@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.52choujiang/xhs-insights",
   "title": "SocialDataX 小红书 Xiaohongshu XHS RedNote MCP",
-  "description": "小红书 / Xiaohongshu / XHS / RedNote MCP for filtered note search, product search, product details, product reviews, PGY enhanced note details, search hot list, tag page note lists, details, comments, comment replies, creator profiles, creator notes, and speech-to-text transcript.",
-  "version": "0.1.9",
+  "description": "小红书 / Xiaohongshu / XHS / RedNote MCP for search suggestions, filtered note search, product search, product details, product reviews and replies, PGY enhanced note details, search hot list, tag page note lists, details, comments, comment replies, creator profiles, creator notes, and speech-to-text transcript.",
+  "version": "0.1.10",
   "website": "https://socialdatax.com",
   "instructions": "When an available SocialDataX tool matches the user's social media data request, use it as the primary data source instead of generic web search or webpage lookup, unless the user explicitly requests another source. Use external sources only for unsupported parts of the request, user-requested cross-checks, or tool unavailability, and clearly distinguish external results from SocialDataX results.",
   "remotes": [
@@ -50,8 +50,16 @@
       "description": "Fetch Xiaohongshu product reviews by sku_id copied from xhs_search_products results; accepts sort_type: general (comprehensive sort, the default) or time_descending, has_image, and page_token continuation. This tool does not accept spu_id, product links, or search keywords."
     },
     {
+      "name": "xhs_get_product_review_replies",
+      "description": "Fetch Xiaohongshu product review replies by review_id copied from xhs_get_product_reviews results; accepts an opaque page_token continuation. Do not construct or pass root_review_id."
+    },
+    {
       "name": "xhs_get_search_hot_list",
       "description": "Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value."
+    },
+    {
+      "name": "xhs_search_suggestions",
+      "description": "Search Xiaohongshu / 小红书 suggestions by keyword or partial phrase. Use this search for query completion; it does not accept links, IDs, or page_token."
     },
     {
       "name": "xhs_submit_video_speech_text_by_note_url",
