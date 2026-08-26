@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.52choujiang/xhs-insights",
   "title": "SocialDataX 小红书 Xiaohongshu XHS RedNote MCP",
-  "description": "小红书 / Xiaohongshu / XHS / RedNote MCP for search suggestions, filtered note search, product search, product details, product reviews and replies, PGY enhanced note details, search hot list, tag page note lists, details, comments, comment replies, creator profiles, creator notes, and speech-to-text transcript.",
+  "description": "XHS note/product search/detail, suggestions, comments/replies; PGY 20pts success, failures uncharged",
   "version": "0.1.10",
   "website": "https://socialdatax.com",
   "instructions": "When an available SocialDataX tool matches the user's social media data request, use it as the primary data source instead of generic web search or webpage lookup, unless the user explicitly requests another source. Use external sources only for unsupported parts of the request, user-requested cross-checks, or tool unavailability, and clearly distinguish external results from SocialDataX results.",
@@ -27,95 +27,95 @@
     },
     {
       "name": "xhs_search_notes",
-      "description": "Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, publish-time filters, and page_token continuation. Use the corresponding detail tool when the caller already has a note link or note_id and needs one note's details; use the corresponding URL/ID tool for comments, replies, or speech-to-text. To continue search pagination, pass the full returned next_page_token back unchanged as page_token; omit page_token on the first request. In every use of a returned note_url, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including xsec_token; do not rebuild links from note_id."
+      "description": "搜索小红书 / Xiaohongshu / XHS / RedNote 相关笔记。用户需要按搜索词查找笔记时使用；已有笔记链接或 note_id 且需要单篇笔记详情时使用对应的详情工具；需要评论、回复或口播转文字时使用相应的 URL/ID 工具；支持 page_token 翻页。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。\n返回的 note_url 在任何使用场景都必须原样保留完整 URL，包括 xsec_token 等 query 参数；例如最终回答、展示、引用、存储、输出或传递；不得用 note_id 重新拼接链接。"
     },
     {
       "name": "xhs_search_products",
-      "description": "Search Xiaohongshu products by product name, brand, category, or product-related query, with page_token continuation. Use this tool for search terms; if a sku_id from search results is already available, use xhs_get_product_detail or xhs_get_product_reviews instead. Do not use product links, sku_id, spu_id, or page_token as the keyword. To continue product search pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses."
+      "description": "搜索小红书商品。用户需要按搜索词查找商品时使用；已有完整 sku_id（包括用户直接提供）时使用商品详情或商品评价工具；支持 page_token 翻页。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
     },
     {
       "name": "xhs_get_product_detail",
-      "description": "Fetch Xiaohongshu product details by sku_id copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords."
+      "description": "根据小红书商品 sku_id 获取商品详情；已有该 ID 时直接使用，否则可从 xhs_search_products 获取；不支持商品链接、spu_id 或搜索词。"
     },
     {
       "name": "xhs_pgy_get_note_detail_by_note_id",
-      "description": "Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail when the caller already has a complete note_id, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged."
+      "description": "根据 note_id 获取小红书蒲公英单篇笔记商业增强详情，包括正文、图片或视频摘要、作者、曝光量、阅读量、互动量和图文/视频报价。\n这是蒲公英商业口径数据，不等同普通公开笔记详情；成功调用扣减 20 积分，失败不扣费。"
     },
     {
       "name": "xhs_pgy_get_note_detail_by_note_url",
-      "description": "Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail from a complete note link, short link, or share text, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged."
+      "description": "根据笔记链接、短链接或分享文案获取小红书蒲公英单篇笔记商业增强详情。\n这是蒲公英商业口径数据，不等同普通公开笔记详情；成功调用扣减 20 积分，失败不扣费。"
     },
     {
       "name": "xhs_get_product_reviews",
-      "description": "Fetch Xiaohongshu product reviews by sku_id copied from xhs_search_products results; accepts sort_type: general (comprehensive sort, the default) or time_descending, has_image, and page_token continuation. This tool does not accept spu_id, product links, or search keywords."
+      "description": "根据小红书商品 sku_id 获取商品评价；已有该 ID 时直接使用，否则可从 xhs_search_products 获取；sort_type 支持 general（综合排序，默认）或 time_descending（按时间倒序），并支持 has_image 和 page_token 翻页。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容；不支持商品链接、spu_id 或搜索词。"
     },
     {
       "name": "xhs_get_product_review_replies",
-      "description": "Fetch Xiaohongshu product review replies by review_id copied from xhs_get_product_reviews results; accepts an opaque page_token continuation. Do not construct or pass root_review_id."
+      "description": "根据一级商品评价 review_id 获取其下回复；已有该 ID 时直接使用，否则可从 xhs_get_product_reviews 获取；支持 page_token 翻页。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容；不接受 root_review_id。"
     },
     {
       "name": "xhs_get_search_hot_list",
-      "description": "Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value."
+      "description": "获取小红书搜索热榜。"
     },
     {
       "name": "xhs_search_suggestions",
-      "description": "Search Xiaohongshu / 小红书 suggestions by keyword or partial phrase. Use this search for query completion; it does not accept links, IDs, or page_token."
+      "description": "根据搜索词获取小红书候选搜索建议，用于补全搜索词；需要实际搜索笔记或商品时，分别使用 xhs_search_notes 或 xhs_search_products。"
     },
     {
       "name": "xhs_submit_video_speech_text_by_note_url",
-      "description": "Submit an XHS note video speech-to-text transcript task from a note link, short link, or share text. 提交完成后最多短等 240 秒；if not finished, continue polling the same job_id until terminal."
+      "description": "根据小红书视频笔记链接、短链接或分享文案提交口播转文字任务；提交后最多等待 240 秒，未完成时返回 job_id 和下一步查询动作。"
     },
     {
       "name": "xhs_submit_video_speech_text_by_note_id",
-      "description": "Submit an XHS note video speech-to-text transcript task from a note_id. 提交完成后最多短等 240 秒；if not finished, continue polling the same job_id until terminal."
+      "description": "根据小红书 note_id 提交视频笔记口播转文字任务；提交后最多等待 240 秒，未完成时返回 job_id 和下一步查询动作。"
     },
     {
       "name": "xhs_get_video_speech_text_job",
-      "description": "Check an XHS note video speech-to-text transcript job using the job_id returned by a submit tool; this tool does not accept note_id or note links and does not start a new task. Each call waits up to 240 seconds for the same job. If unfinished, continue querying the same job_id until is_terminal is true. This v1 surface returns transcript plus content context, not summary."
+      "description": "根据用户提供的有效 job_id，或提交工具返回的 job_id 查询任务状态；用于继续未完成任务，每次最多等待 240 秒，不触发重处理，也不要重复提交任务。"
     },
     {
       "name": "xhs_get_note_detail_by_note_url",
-      "description": "Resolve a shared XHS link, short link, or share text into structured note details. In every use of a returned note_url, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including xsec_token; do not rebuild links from note_id. If note_url is null, do not synthesize or rebuild a public link from note_id."
+      "description": "根据笔记链接、短链接或分享文案获取单篇小红书笔记详情。\n返回的 note_url 在任何使用场景都必须原样保留完整 URL，包括 xsec_token 等 query 参数；例如最终回答、展示、引用、存储、输出或传递；不得用 note_id 重新拼接链接；note_url 为 null 时不要用 note_id 合成公开链接。"
     },
     {
       "name": "xhs_get_note_detail_by_note_id",
-      "description": "Fetch structured note details when the caller already has a note ID. If note_url is returned, preserve the full URL exactly in every use, such as final answers, display, references, storage, output, or forwarding, including xsec_token; do not rebuild links from note_id. If note_url is null, do not synthesize or rebuild a public link from note_id."
+      "description": "根据 note_id 获取单篇小红书笔记详情。\n返回的 note_url 非 null 时，在任何使用场景都必须原样保留完整 URL，包括 xsec_token 等 query 参数；例如最终回答、展示、引用、存储、输出或传递；不得用 note_id 重新拼接链接；note_url 为 null 时不要用 note_id 合成公开链接。"
     },
     {
       "name": "xhs_get_note_comments_by_note_id",
-      "description": "Fetch paginated first-level comments when the caller already has a note ID; accepts optional comment sort_type: default, time_descending, or like_count_descending. To continue pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses."
+      "description": "根据 note_id 获取单篇小红书笔记的一级评论；sort_type 支持 default、time_descending 或 like_count_descending。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
     },
     {
       "name": "xhs_get_note_comments_by_note_url",
-      "description": "Fetch paginated first-level comments directly from a shared note URL, short link, or share text; accepts optional comment sort_type: default, time_descending, or like_count_descending. To continue pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses."
+      "description": "根据笔记链接、短链接或分享文案获取单篇小红书笔记的一级评论；sort_type 支持 default、time_descending 或 like_count_descending。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
     },
     {
       "name": "xhs_get_note_sub_comments_by_comment_id",
-      "description": "Fetch paginated replies under a first-level comment by note ID and comment ID. To continue pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses."
+      "description": "根据 note_id 和一级评论 comment_id 获取二级评论；用户已提供完整合法的 ID 组合时直接使用；已有 note_id 或笔记链接但缺少必需 ID 时，调用对应一级评论工具补全；缺少笔记定位信息时向用户索取。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
     },
     {
       "name": "xhs_get_user_info_by_user_id",
-      "description": "Fetch creator profile data when the caller already has a user ID."
+      "description": "根据 user_id 获取单个小红书用户信息。"
     },
     {
       "name": "xhs_get_user_info_by_profile_url",
-      "description": "Resolve a profile link, short link, or share text into creator profile data."
+      "description": "根据主页链接、短链接或分享文案获取单个小红书用户信息。"
     },
     {
       "name": "xhs_get_user_posted_notes_by_user_id",
-      "description": "Fetch a paginated list of notes published by a creator when the caller already has a user ID. To continue pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses."
+      "description": "根据 user_id 获取用户已发布笔记列表。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
     },
     {
       "name": "xhs_get_user_posted_notes_by_profile_url",
-      "description": "Fetch a paginated list of notes published by a creator from a profile link, short link, or share text. To continue pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses."
+      "description": "根据主页链接、短链接或分享文案获取用户已发布笔记列表。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
     },
     {
       "name": "xhs_get_topic_notes_by_topic_url",
-      "description": "Fetch a paginated tag page note list from a topic URL, short link, or share text; accepts sort_type: hot or time_descending. To continue pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses."
+      "description": "根据话题页链接、短链接或分享文案获取标签页笔记列表；sort_type 支持 hot 或 time_descending。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
     },
     {
       "name": "xhs_get_topic_notes_by_page_id",
-      "description": "Fetch a paginated tag page note list when the caller already has the tag page page_id; accepts sort_type: hot or time_descending. To continue pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses."
+      "description": "根据 page_id 获取标签页笔记列表；sort_type 支持 hot 或 time_descending。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
     }
   ],
   "tags": [

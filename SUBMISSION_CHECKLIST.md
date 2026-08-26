@@ -52,7 +52,7 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 - `xhs_search_suggestions` is present in `tools/list` and accepts only the required `keyword` field.
 - `xhs_pgy_get_note_detail_by_note_id` and `xhs_pgy_get_note_detail_by_note_url` are present in `tools/list`, the old MCP name is absent, and both descriptions state the 20-point successful-call cost and that failures are not charged.
 - `xhs_get_product_reviews` is present in `tools/list`.
-- `xhs_get_product_review_replies` is present in `tools/list` and accepts `review_id` copied from product review items.
+- `xhs_get_product_review_replies` is present in `tools/list` and accepts a user-provided first-level `review_id` or one copied from product review items.
 - `xhs_submit_video_speech_text_by_note_url`, `xhs_submit_video_speech_text_by_note_id`, and `xhs_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
 - `examples/codex_config.toml` uses remote HTTP URL and `bearer_token_env_var`, not `mcp-remote`.
 - `examples/cursor_mcp.json` uses remote HTTP URL and `headers` with `${env:SOCIALDATAX_API_KEY}`, not `mcp-remote`.

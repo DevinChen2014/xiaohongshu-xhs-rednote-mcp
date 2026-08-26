@@ -50,9 +50,9 @@ Supported workflows include:
 - Query the current API Key account's SocialDataX points balance.
 - Search related Xiaohongshu notes by keyword, with optional sort, note type, and publish-time filters.
 - Search Xiaohongshu products by keyword with page_token continuation.
-- Fetch product details by sku_id copied from product search results.
+- Fetch product details by a complete sku_id supplied by the user or copied from product search results.
 - Fetch one PGY / 蒲公英 enhanced note detail from either a complete note_id or a note link, short link, or share text; successful calls cost 20 points and failures are not charged.
-- Fetch product reviews by sku_id copied from product search results.
+- Fetch product reviews by a complete sku_id supplied by the user or copied from product search results.
 - Read the Xiaohongshu search hot list with title and heat value.
 - Read Xiaohongshu search suggestions for a keyword or partial phrase.
 - Resolve a shared note link, short link, or share text into structured note details.
@@ -62,7 +62,7 @@ Supported workflows include:
 - Read creator profile data from a profile link, short link, share text, or user ID.
 - Fetch paginated creator note lists from a user ID, profile link, short link, or share text for content style and account research.
 - Fetch paginated tag page note lists from a topic URL, short link, share text, or page ID.
-- Submit a video note speech-to-text transcript task; submit tools 提交完成后最多短等 240 秒, and unfinished jobs should continue polling the same `job_id` until terminal.
+- Submit a video note speech-to-text transcript task; the submit call may wait up to 240 seconds, and unfinished jobs should continue polling the same `job_id` until terminal.
 
 ## Tools
 
@@ -70,12 +70,12 @@ Supported workflows include:
 | --- | --- |
 | `socialdatax_get_points_balance` | Query the current API Key account's SocialDataX points balance. |
 | `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, publish-time filters, and `page_token` continuation. Use the corresponding detail tool when the caller already has a note link or `note_id` and needs one note's details; use the corresponding URL/ID tool for comments, replies, or speech-to-text. To continue search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; omit `page_token` on the first request. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. |
-| `xhs_search_products` | Search Xiaohongshu products by product name, brand, category, or product-related query, with `page_token` continuation. Use this tool for search terms; if a `sku_id` from search results is already available, use `xhs_get_product_detail` or `xhs_get_product_reviews` instead. Do not use product links, `sku_id`, `spu_id`, or `page_token` as the keyword. To continue product search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
-| `xhs_get_product_detail` | Fetch Xiaohongshu product details by `sku_id` copied from `xhs_search_products` results. This tool does not accept `spu_id`, product links, or search keywords. |
+| `xhs_search_products` | Search Xiaohongshu products by product name, brand, category, or product-related query, with `page_token` continuation. Use this tool for search terms; if a complete `sku_id` is already available, including one supplied by the user, use `xhs_get_product_detail` or `xhs_get_product_reviews` instead. Do not use product links, `sku_id`, `spu_id`, or `page_token` as the keyword. To continue product search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
+| `xhs_get_product_detail` | Fetch Xiaohongshu product details by a complete `sku_id` supplied by the user or copied from `xhs_search_products` results. This tool does not accept `spu_id`, product links, or search keywords. |
 | `xhs_pgy_get_note_detail_by_note_id` | Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail when the caller already has a complete `note_id`, including content, images or a video summary, author, exposure, reads, engagement counts, and image/video pricing. This is PGY commercial data, not ordinary public note detail; successful calls cost 20 points and failures are not charged. |
 | `xhs_pgy_get_note_detail_by_note_url` | Fetch one Xiaohongshu PGY / 蒲公英 enhanced note detail from a complete note link, short link, or share text, with the same PGY commercial output. Successful calls cost 20 points and failures are not charged. |
-| `xhs_get_product_reviews` | Fetch Xiaohongshu product reviews by `sku_id` copied from `xhs_search_products` results; accepts `sort_type`: `general` (comprehensive sort, the default) or `time_descending`, `has_image`, and `page_token` continuation. This tool does not accept `spu_id`, product links, or search keywords. |
-| `xhs_get_product_review_replies` | Fetch replies under a first-level Xiaohongshu product review by copying `review_id` from `xhs_get_product_reviews`; accepts opaque `page_token` continuation and does not accept `root_review_id`. |
+| `xhs_get_product_reviews` | Fetch Xiaohongshu product reviews by a complete `sku_id` supplied by the user or copied from `xhs_search_products` results; accepts `sort_type`: `general` (comprehensive sort, the default) or `time_descending`, `has_image`, and `page_token` continuation. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. This tool does not accept `spu_id`, product links, or search keywords. |
+| `xhs_get_product_review_replies` | Fetch replies under a first-level Xiaohongshu product review. Use a user-provided `review_id`, or obtain one from `xhs_get_product_reviews`; accepts opaque `page_token` continuation. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. This tool does not accept `root_review_id`. |
 | `xhs_get_search_hot_list` | Get the Xiaohongshu / 小红书 search hot list with each item's title and heat value. |
 | `xhs_search_suggestions` | Get Xiaohongshu / 小红书 search suggestions for a keyword or partial phrase, including suggestion text, search target, and an optional description. |
 | `xhs_get_note_detail_by_note_url` | Resolve a shared XHS link, short link, or share text into structured note details. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. If `note_url` is null, do not synthesize or rebuild a public link from `note_id`. |
@@ -89,9 +89,9 @@ Supported workflows include:
 | `xhs_get_user_posted_notes_by_profile_url` | Fetch a paginated list of notes published by a creator from a profile link, short link, or share text. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
 | `xhs_get_topic_notes_by_topic_url` | Fetch a paginated tag page note list from a topic URL, short link, or share text; accepts `sort_type`: `hot` or `time_descending`. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
 | `xhs_get_topic_notes_by_page_id` | Fetch a paginated tag page note list when the caller already has the tag page `page_id`; accepts `sort_type`: `hot` or `time_descending`. To continue pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
-| `xhs_submit_video_speech_text_by_note_url` | Submit a video note speech-to-text transcript task from a note link, short link, or share text. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
-| `xhs_submit_video_speech_text_by_note_id` | Submit a video note speech-to-text transcript task from a `note_id`. 提交完成后最多短等 240 秒；未完成时继续查询同一个 `job_id` 直到终态. |
-| `xhs_get_video_speech_text_job` | Check a video note speech-to-text transcript job using the `job_id` returned by a submit tool; this tool does not accept `note_id` or note links and does not create a new task. Each call waits up to 240 seconds. If unfinished, continue querying the same `job_id` until terminal. This v1 surface returns transcript plus content context, not summary. |
+| `xhs_submit_video_speech_text_by_note_url` | Submit a video note speech-to-text transcript task from a note link, short link, or share text. The submit call may wait up to 240 seconds; if unfinished, continue polling the same `job_id` until terminal. |
+| `xhs_submit_video_speech_text_by_note_id` | Submit a video note speech-to-text transcript task from a `note_id`. The submit call may wait up to 240 seconds; if unfinished, continue polling the same `job_id` until terminal. |
+| `xhs_get_video_speech_text_job` | Check a video note speech-to-text transcript job using a valid `job_id` supplied by the user, or a `job_id` returned by a submit tool; this tool does not accept `note_id` or note links and does not create a new task. Each call waits up to 240 seconds. If unfinished, continue querying the same `job_id` until terminal. This v1 surface returns transcript plus content context, not summary. |
 
 ## Quick Start
 
