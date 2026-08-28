@@ -17,7 +17,7 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 - Hosted MCP endpoint: `https://mcp.socialdatax.com/xhs/mcp`
 - Hosted auth: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
 - Default client transport: hosted `streamable-http`
-- Command/stdio fallback: `npx -y mcp-remote https://mcp.socialdatax.com/xhs/mcp --header "Authorization: Bearer <SOCIALDATAX_API_KEY>"`
+- Command/stdio fallback: set `SOCIALDATAX_API_KEY` in the client environment, then use `npx -y mcp-remote https://mcp.socialdatax.com/xhs/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'`
 - License: MIT for the public documentation and examples only
 
 ## Safety Checks
