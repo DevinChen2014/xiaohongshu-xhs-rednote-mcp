@@ -6,11 +6,11 @@ import { fileURLToPath } from "node:url";
 
 const DEFAULT_UPSTREAM_URL = "https://mcp.socialdatax.com/xhs/mcp";
 
-const currentDir = dirname(fileURLToPath(import.meta.url));
+const remotePackagePath = fileURLToPath(
+  import.meta.resolve("mcp-remote/package.json")
+);
 const remoteEntry = join(
-  currentDir,
-  "node_modules",
-  "mcp-remote",
+  dirname(remotePackagePath),
   "dist",
   "proxy.js"
 );

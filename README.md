@@ -41,6 +41,26 @@ Common search phrases for this MCP service:
 
 Use the hosted `streamable-http` endpoint directly from clients that support authenticated remote MCP. For clients that only support command/stdio MCP servers, use `mcp-remote` as a local compatibility proxy.
 
+## npm stdio bridge
+
+Command/stdio-only MCP clients can install and start the bridge directly from npm:
+
+```json
+{
+  "mcpServers": {
+    "socialdatax-xhs": {
+      "command": "npx",
+      "args": ["-y", "xiaohongshu-xhs-rednote-mcp"],
+      "env": {
+        "SOCIALDATAX_API_KEY": "<SOCIALDATAX_API_KEY>"
+      }
+    }
+  }
+}
+```
+
+The package only forwards local stdio MCP messages to the hosted SocialDataX XHS endpoint. It does not contain the private service implementation or store the API Key.
+
 ## Workflow Scope
 
 This MCP service is designed for social media content intelligence workflows. It does not provide account login, posting, editing, liking, commenting, or other account actions.
