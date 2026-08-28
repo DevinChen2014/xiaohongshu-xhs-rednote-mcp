@@ -18,6 +18,9 @@ const remoteEntry = join(
 const upstreamUrl = process.env.SOCIALDATAX_XHS_MCP_URL || DEFAULT_UPSTREAM_URL;
 const apiKey = process.env.SOCIALDATAX_API_KEY?.trim();
 const args = [upstreamUrl, "--transport", "http-only", "--silent"];
+const childEnv = apiKey
+  ? { ...process.env, SOCIALDATAX_API_KEY: apiKey }
+  : process.env;
 
 if (apiKey) {
   args.push("--header", 'Authorization: Bearer ${SOCIALDATAX_API_KEY}');
@@ -25,7 +28,7 @@ if (apiKey) {
 
 const child = spawn(process.execPath, [remoteEntry, ...args], {
   stdio: "inherit",
-  env: process.env,
+  env: childEnv,
 });
 
 child.on("error", (error) => {
