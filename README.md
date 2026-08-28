@@ -35,7 +35,7 @@ Common search phrases for this MCP service:
 - Website and API Key access: <https://socialdatax.com/ai?from=github>
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
-- Current public capability version: `0.1.11` (repo-tracked, pending deployment and publication). The hosted production `tools/list` and server card expose all 24 tracked tools at `0.1.10`; the official Registry and public GitHub repository remain at `0.1.10`. Version `0.1.11` keeps the same 24 tools and renames the public XHS product search/detail shop fields from `seller_*` to `shop_*`.
+- Current public capability version: `0.1.11`. The hosted production `tools/list` and server card, public GitHub repository, and npm stdio bridge are synchronized at 24 tools. The official Registry latest remains `0.1.10` pending publication of `0.1.11`. Version `0.1.11` renames the public XHS product search/detail shop fields from `seller_*` to `shop_*`.
 
 ## Platform MCP
 

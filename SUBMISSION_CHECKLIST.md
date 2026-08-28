@@ -1,6 +1,6 @@
 # MCP Directory Submission Checklist
 
-Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The hosted production `tools/list` and server card expose all 24 tracked tools at `0.1.10`. The repo-tracked `0.1.11` listing keeps the same 24 tools and renames the public XHS product search/detail shop fields from `seller_*` to `shop_*`; the official Registry and public GitHub repository remain at `0.1.10` until `0.1.11` is deployed and published.
+Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The hosted production `tools/list` and server card, public GitHub repository, and npm stdio bridge are synchronized at `0.1.11` with all 24 tracked tools. Version `0.1.11` renames the public XHS product search/detail shop fields from `seller_*` to `shop_*`; the official Registry latest remains `0.1.10` pending publication.
 
 ## Public Repository
 
