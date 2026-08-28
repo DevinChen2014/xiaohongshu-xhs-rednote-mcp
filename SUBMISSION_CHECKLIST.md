@@ -1,6 +1,6 @@
 # MCP Directory Submission Checklist
 
-Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The hosted production `tools/list` and server card, public GitHub repository, and npm stdio bridge are synchronized at `0.1.11` with all 24 tracked tools. Version `0.1.11` renames the public XHS product search/detail shop fields from `seller_*` to `shop_*`; the official Registry latest remains `0.1.10` pending publication.
+Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The hosted production `tools/list`, server card, and public GitHub repository are synchronized at `0.1.11` with all 24 tracked tools. The npm stdio bridge is published as `xiaohongshu-xhs-rednote-mcp@0.1.11` and connects to the same hosted surface. Version `0.1.11` renames the public XHS product search/detail shop fields from `seller_*` to `shop_*`; the official Registry latest remains `0.1.10` pending publication.
 
 ## Public Repository
 
