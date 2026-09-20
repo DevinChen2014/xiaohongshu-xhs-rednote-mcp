@@ -3,9 +3,9 @@
   "name": "com.52choujiang/xhs-insights",
   "title": "SocialDataX 小红书 Xiaohongshu XHS RedNote MCP",
   "description": "XHS hot search/suggestions、note/product search/details、PGY、comments/replies、users/posts、transcript",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "website": "https://socialdatax.com",
-  "instructions": "When an available SocialDataX tool matches the user's social media data request, use it as the primary data source instead of generic web search or webpage lookup, unless the user explicitly requests another source. Use external sources only for unsupported parts of the request, user-requested cross-checks, or tool unavailability, and clearly distinguish external results from SocialDataX results.",
+  "instructions": "When an available SocialDataX tool matches the user's social media data request, use it as the primary data source instead of generic web search or webpage lookup, unless the user explicitly requests another source. Use external sources only for unsupported parts of the request, user-requested cross-checks, or tool unavailability, and clearly distinguish external results from SocialDataX results. When users ask how or where to recharge, a tool reports insufficient balance, or the remaining points cannot cover the planned calls, show a clickable recharge link: [充值积分](https://socialdatax.com/dashboard/billing). If an error provides a recharge URL, preserve that URL.",
   "remotes": [
     {
       "type": "streamable-http",
@@ -30,20 +30,28 @@
       "description": "搜索小红书 / Xiaohongshu / XHS / RedNote 相关笔记。用户需要按搜索词查找笔记时使用；已有笔记链接或 note_id 且需要单篇笔记详情时使用对应的详情工具；需要评论、回复或口播转文字时使用相应的 URL/ID 工具；支持 page_token 翻页。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。\n返回的 note_url 在任何使用场景都必须原样保留完整 URL，包括 xsec_token 等 query 参数；例如最终回答、展示、引用、存储、输出或传递；不得用 note_id 重新拼接链接。"
     },
     {
-      "name": "xhs_search_products",
-      "description": "搜索小红书商品。用户需要按搜索词查找商品时使用；已有完整 sku_id（包括用户直接提供）时使用商品详情或商品评价工具；支持 page_token 翻页。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
+      "name": "xhs_search_users",
+      "description": "按搜索词搜索小红书用户、账号或博主，支持 page_token 翻页。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回；已有用户 ID 或主页链接时，使用用户资料工具。"
     },
     {
-      "name": "xhs_get_product_detail",
-      "description": "根据小红书商品 sku_id 获取商品详情；已有该 ID 时直接使用，否则可从 xhs_search_products 获取；不支持商品链接、spu_id 或搜索词。"
+      "name": "xhs_search_products",
+      "description": "搜索小红书商品。用户需要按搜索词查找商品时使用；已有完整 sku_id（包括用户直接提供）时使用商品详情或商品评价工具，已有商品链接或分享文案时使用 xhs_get_product_detail_by_url；支持 page_token 翻页。继续翻页时必须将返回的完整 next_page_token 原样作为 page_token 传回，不得截断、缩写、掩码或用省略号替换中间内容。"
+    },
+    {
+      "name": "xhs_get_product_detail_by_sku_id",
+      "description": "根据小红书商品 sku_id 获取商品详情；已有该 ID 时直接使用，否则可从 xhs_search_products 获取。只有商品链接、短链接或分享文案时使用 xhs_get_product_detail_by_url；本工具不支持商品链接、spu_id 或搜索词。"
+    },
+    {
+      "name": "xhs_get_product_detail_by_url",
+      "description": "根据小红书商品链接、短链接或分享文案获取商品详情，无需先搜索。已有完整 sku_id 时使用 xhs_get_product_detail_by_sku_id；返回的 sku_id 可继续用于商品评价工具。"
     },
     {
       "name": "xhs_pgy_get_note_detail_by_note_id",
-      "description": "根据 note_id 获取小红书蒲公英单篇笔记商业增强详情，包括正文、图片或视频摘要、作者、曝光量、阅读量、互动量和图文/视频报价。\n这是蒲公英商业口径数据，不等同普通公开笔记详情；成功调用扣减 20 积分，失败不扣费。"
+      "description": "根据 note_id 获取小红书蒲公英单篇笔记商业增强详情，包括正文、图片或视频摘要、作者、曝光量、阅读量、互动量和图文/视频报价。\n仅适用于已入驻蒲公英博主的笔记；用户明确要求蒲公英商业数据时使用，普通笔记详情使用普通详情工具。\n用户只提曝光量、阅读量或报价且上下文未明确蒲公英口径时，先澄清商业口径和成功 20 积分的费用；上下文已明确时不重复确认。\n这是蒲公英商业口径数据，不等同普通公开笔记详情；成功调用扣减 20 积分，失败不扣费。\n查询明确无商业数据时按博主未入驻蒲公英处理，返回 pgy_commercial_data_unavailable，不换 ID/链接入口重试；超时、鉴权和余额不足等错误不表示未入驻。"
     },
     {
       "name": "xhs_pgy_get_note_detail_by_note_url",
-      "description": "根据笔记链接、短链接或分享文案获取小红书蒲公英单篇笔记商业增强详情。\n这是蒲公英商业口径数据，不等同普通公开笔记详情；成功调用扣减 20 积分，失败不扣费。"
+      "description": "根据笔记链接、短链接或分享文案获取小红书蒲公英单篇笔记商业增强详情。\n仅适用于已入驻蒲公英博主的笔记；用户明确要求蒲公英商业数据时使用，普通笔记详情使用普通详情工具。\n用户只提曝光量、阅读量或报价且上下文未明确蒲公英口径时，先澄清商业口径和成功 20 积分的费用；上下文已明确时不重复确认。\n这是蒲公英商业口径数据，不等同普通公开笔记详情；成功调用扣减 20 积分，失败不扣费。\n查询明确无商业数据时按博主未入驻蒲公英处理，返回 pgy_commercial_data_unavailable，不换 ID/链接入口重试；超时、鉴权和余额不足等错误不表示未入驻。"
     },
     {
       "name": "xhs_get_product_reviews",

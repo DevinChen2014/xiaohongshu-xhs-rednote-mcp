@@ -1,6 +1,6 @@
 # MCP Directory Submission Checklist
 
-Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. The hosted production `tools/list`, server card, and public GitHub repository are synchronized at `0.1.11` with all 24 tracked tools. The npm stdio bridge is published as `xiaohongshu-xhs-rednote-mcp@0.1.11` and connects to the same hosted surface. Version `0.1.11` renames the public XHS product search/detail shop fields from `seller_*` to `shop_*`; the official Registry latest remains `0.1.10` pending publication.
+Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. Capability version `0.1.12` with 26 tracked tools is live in hosted production and the official Registry, adds product detail lookup by URL, and renames the public product detail field `images` to `main_images`; `detail_images` remains unchanged. The public GitHub repository and npm stdio bridge remain at `0.1.11` and have been verified separately.
 
 ## Public Repository
 
@@ -48,7 +48,8 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 
 - Hosted streamable HTTP clients can connect directly to `https://mcp.socialdatax.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- With a valid key, hosted MCP `tools/list` returns the current 24 public tools.
+- After deploying the pending capability version, verify hosted MCP `tools/list` returns the current 26 public tools with a valid key.
+- `xhs_get_product_detail_by_url` accepts only the required `url` field; the ID tool remains `xhs_get_product_detail_by_sku_id(sku_id)`. Both return the same product detail fields.
 - `xhs_search_suggestions` is present in `tools/list` and accepts only the required `keyword` field.
 - `xhs_pgy_get_note_detail_by_note_id` and `xhs_pgy_get_note_detail_by_note_url` are present in `tools/list`, the old MCP name is absent, and both descriptions state the 20-point successful-call cost and that failures are not charged.
 - `xhs_get_product_reviews` is present in `tools/list`.
@@ -87,3 +88,10 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 - `小红书 数据 MCP`
 - `social insights`
 - `社媒数据助手`
+
+## PGY enrollment boundary (source update, not yet published)
+
+- Both PGY tools state enrolled-creators-only scope, 20 points on success and no charge on failure.
+- Explicit no-commercial-data retains MCP `pgy_commercial_data_unavailable` and HTTP `1009`, with the not-enrolled message; no ID/URL retry.
+- Transport, authentication, balance and input errors are not reclassified.
+- Refresh tool descriptions and server card together at the next release; current online metadata is not asserted to be updated.
