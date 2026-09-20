@@ -1,6 +1,6 @@
 # MCP Directory Submission Checklist
 
-Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. Capability version `0.1.12` with 26 tracked tools is live in hosted production, the official Registry, the public GitHub repository, and the npm stdio bridge, adds product detail lookup by URL, and renames the public product detail field `images` to `main_images`; `detail_images` remains unchanged.
+Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry. Capability version `0.1.12` with 26 tracked tools is live in hosted production, the official Registry, and the public GitHub repository; the npm stdio bridge is `xiaohongshu-xhs-rednote-mcp@0.1.13`. It adds product detail lookup by URL and renames the public product detail field `images` to `main_images`; `detail_images` remains unchanged.
 
 ## Public Repository
 

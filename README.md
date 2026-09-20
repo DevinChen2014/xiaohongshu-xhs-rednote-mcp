@@ -35,7 +35,7 @@ Common search phrases for this MCP service:
 - Website and API Key access: <https://socialdatax.com/ai?from=github>
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
-- Current public capability version: `0.1.12` with 26 tracked tools. It adds product detail lookup by URL and renames the public product detail field `images` to `main_images`; `detail_images` remains unchanged. Hosted production, the official Registry, the public GitHub repository, and the npm stdio bridge are now all at `0.1.12` and have been verified separately.
+- Current public capability version: `0.1.12` with 26 tracked tools. It adds product detail lookup by URL and renames the public product detail field `images` to `main_images`; `detail_images` remains unchanged. Hosted production, the official Registry, and the public GitHub repository are at capability `0.1.12`; the npm stdio bridge is `xiaohongshu-xhs-rednote-mcp@0.1.13` and has been verified separately.
 
 ## Platform MCP
 
