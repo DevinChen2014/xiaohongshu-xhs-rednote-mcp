@@ -4,9 +4,9 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 
 - Local capability: `0.1.14` with 34 tracked tools, including creator commercial overview and note performance metrics.
 - Hosted production: `0.1.14` with 34 tools, verified on `2026-09-29`; cooperation note performance uses signed relative comparison fields only in `notes[]` `*_benchmark_rate` values.
-- Official MCP Registry: `0.1.12` (`active`, `isLatest=true`), verified on `2026-09-25`.
-- Public GitHub server card: `0.1.12` with 26 tools, verified on `2026-09-25`.
-- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.13`, verified on `2026-09-25`; bridge package versions are independent of hosted capability versions.
+- Official MCP Registry: `0.1.12` (`active`, `isLatest=true`), last verified on `2026-09-25`; `0.1.14` publication is pending recovered DNS signing credentials.
+- Public GitHub server card: `0.1.14` with 34 tools, published on `2026-09-29` at commit `8b545cf`.
+- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.14`, published on `2026-09-29`; bridge package versions are independent of hosted capability versions.
 
 The current capability includes encrypted user ID resolution, PGY creator profiles, note performance, fans profiles and fans summaries, product review reply-reply lookup, product detail lookup by URL, and the product detail field rename (`images` to `main_images`; `detail_images` remains unchanged).
 
@@ -103,11 +103,11 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 - `social insights`
 - `社媒数据助手`
 
-## PGY enrollment boundary (source update, not yet published)
+## PGY enrollment boundary (published in hosted capability and public metadata)
 
 - Both PGY tools state enrolled-creators-only scope, 20 points on success and no charge on failure.
 - Explicit no-commercial-data retains MCP `pgy_commercial_data_unavailable` and HTTP `1009`, with the not-enrolled message; no ID/URL retry.
 - Transport, authentication, balance and input errors are not reclassified.
-- Refresh tool descriptions and server card together at the next release; current online metadata is not asserted to be updated.
+- Tool descriptions and server card were refreshed together for the `0.1.14` release; recheck the official Registry after publishing its pending version.
 
 - `xhs_pgy_get_creator_metrics_trend` accepts user_id and optional note_scope (daily/cooperation), echoes the scope, and returns summary/items with medians and estimated costs. Verify daily store fields are null, cooperation preserves zero store medians with positive costs, date gaps remain, and successful calls cost 20 points.
