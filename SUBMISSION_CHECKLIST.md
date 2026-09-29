@@ -4,9 +4,9 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 
 - Local capability: `0.1.14` with 34 tracked tools, including creator commercial overview and note performance metrics.
 - Hosted production: `0.1.14` with 34 tools, verified on `2026-09-29`; cooperation note performance uses signed relative comparison fields only in `notes[]` `*_benchmark_rate` values.
-- Official MCP Registry: `0.1.12` (`active`, `isLatest=true`), last verified on `2026-09-25`; `0.1.14` publication is pending recovered DNS signing credentials.
+- Official MCP Registry: `0.1.14` (`active`, `isLatest=true`), published and verified on `2026-09-29`.
 - Public GitHub server card: `0.1.14` with 34 tools, published on `2026-09-29` at commit `8b545cf`.
-- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.14`, published on `2026-09-29`; bridge package versions are independent of hosted capability versions.
+- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.16`, published on `2026-09-29`; bridge package versions are independent of hosted capability versions.
 
 The current capability includes encrypted user ID resolution, PGY creator profiles, note performance, fans profiles and fans summaries, product review reply-reply lookup, product detail lookup by URL, and the product detail field rename (`images` to `main_images`; `detail_images` remains unchanged).
 
