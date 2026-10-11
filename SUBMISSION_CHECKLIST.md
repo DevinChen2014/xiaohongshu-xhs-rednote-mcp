@@ -2,10 +2,10 @@
 
 Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry.
 
-- Local capability: `0.1.14` with 34 tracked tools, including creator commercial overview and note performance metrics.
-- Hosted production: `0.1.14` with 34 tools, verified on `2026-09-29`; cooperation note performance uses signed relative comparison fields only in `notes[]` `*_benchmark_rate` values.
+- Local capability: `0.1.14` with 36 tracked tools, including creator commercial overview and note performance metrics.
+- Hosted production: `0.1.14` with 36 tools; authenticated tool discovery verified on `2026-10-11`, including separate video and image search tools.
 - Official MCP Registry: `0.1.14` (`active`, `isLatest=true`), published and verified on `2026-09-29`.
-- Public GitHub server card: `0.1.14` with 34 tools, published on `2026-09-29` at commit `8b545cf`.
+- The public tool catalog is maintained in [`server-card.json`](server-card.json); npm bridge versions are independent of the hosted tool catalog.
 - npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.16`, published on `2026-09-29`; bridge package versions are independent of hosted capability versions.
 
 The current capability includes encrypted user ID resolution, PGY creator profiles, note performance, fans profiles and fans summaries, product review reply-reply lookup, product detail lookup by URL, and the product detail field rename (`images` to `main_images`; `detail_images` remains unchanged).
@@ -56,7 +56,7 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 
 - Hosted streamable HTTP clients can connect directly to `https://mcp.socialdatax.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- For each capability update, verify hosted MCP `tools/list` returns the current 34 public tools with a valid key.
+- For each capability update, verify hosted MCP `tools/list` returns the current 36 public tools with a valid key.
 - With a valid key, hosted XHS MCP `tools/list` includes `xhs_pgy_get_creator_profile` and `xhs_pgy_get_creator_notes_performance`.
 - Before publishing this listing draft, compare the exact tool names and schemas in its `server-card.json` with authenticated production `tools/list`; matching tool counts alone do not establish that the manifests match. This was rechecked on `2026-09-29` after deployment.
 - `xhs_get_product_detail_by_url` accepts only the required `url` field; the ID tool remains `xhs_get_product_detail_by_sku_id(sku_id)`. Both return the same product detail fields.
@@ -108,6 +108,6 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 - Both PGY tools state enrolled-creators-only scope, 20 points on success and no charge on failure.
 - Explicit no-commercial-data retains MCP `pgy_commercial_data_unavailable` and HTTP `1009`, with the not-enrolled message; no ID/URL retry.
 - Transport, authentication, balance and input errors are not reclassified.
-- Tool descriptions and server card were refreshed together for the `0.1.14` release; recheck the official Registry after publishing its pending version.
+- Tool descriptions and server card were refreshed together for the `0.1.14` release; use the dated channel records above for publication status and recheck the official Registry before submission.
 
 - `xhs_pgy_get_creator_metrics_trend` accepts user_id and optional note_scope (daily/cooperation), echoes the scope, and returns summary/items with medians and estimated costs. Verify daily store fields are null, cooperation preserves zero store medians with positive costs, date gaps remain, and successful calls cost 20 points.

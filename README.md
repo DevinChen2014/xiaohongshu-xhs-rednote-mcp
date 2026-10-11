@@ -35,10 +35,10 @@ Common search phrases for this MCP service:
 - Website and API Key access: <https://socialdatax.com/ai?from=github>
 - Registry name: `com.52choujiang/xhs-insights`
 - Future registry name: `com.socialdatax/xhs-insights`
-- Local capability: `0.1.14` with 34 tracked tools, including creator commercial overview and note performance metrics.
-- Hosted production: `0.1.14` with 34 tools, verified on `2026-09-29`; cooperation note performance uses signed relative comparison fields only in `notes[]` `*_benchmark_rate` values.
+- Local capability: `0.1.14` with 36 tracked tools, including creator commercial overview and note performance metrics.
+- Hosted production: `0.1.14` with 36 tools; authenticated tool discovery verified on `2026-10-11`, including separate video and image search tools.
 - Official MCP Registry: `0.1.14` (`active`, `isLatest=true`), published and verified on `2026-09-29`.
-- Public GitHub server card: `0.1.14` with 34 tools, published on `2026-09-29` at commit `8b545cf`.
+- The public tool catalog is maintained in [`server-card.json`](server-card.json); npm bridge versions are independent of the hosted tool catalog.
 - npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.16`, published on `2026-09-29`; bridge package versions are independent of hosted capability versions.
 
 The current capability includes encrypted user ID resolution, PGY creator profiles, note performance, fans profiles and fans summaries, product review reply-reply lookup, product detail lookup by URL, and the product detail field rename (`images` to `main_images`; `detail_images` remains unchanged).
@@ -100,6 +100,8 @@ Supported workflows include:
 | --- | --- |
 | `socialdatax_get_points_balance` | Query the current API Key account's SocialDataX points balance / 积分余额、剩余积分或点数. |
 | `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, publish-time filters, and `page_token` continuation. Use the corresponding detail tool when the caller already has a note link or `note_id` and needs one note's details; use the corresponding URL/ID tool for comments, replies, or speech-to-text. To continue search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; omit `page_token` on the first request. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. |
+| `xhs_search_videos` | Search Xiaohongshu video results by keyword with `page_token` pagination. For sorting or publish-time filters, use `xhs_search_notes` with `note_type="video"`. |
+| `xhs_search_images` | Search Xiaohongshu images by keyword; each result is one image with its associated note, and one note may contribute multiple images. Pagination may return no further results. For image notes, use `xhs_search_notes` with `note_type="image"`. |
 | `xhs_search_products` | Search Xiaohongshu products by product name, brand, category, or product-related query, with `page_token` continuation. Use this tool for search terms; if a complete `sku_id` is already available, including one supplied by the user, use `xhs_get_product_detail_by_sku_id` or `xhs_get_product_reviews` instead. Do not use product links, `sku_id`, `spu_id`, or `page_token` as the keyword. To continue product search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; do not truncate, summarize, mask, or replace the middle with ellipses. |
 | `xhs_get_product_detail_by_sku_id` | Fetch Xiaohongshu product details by a complete `sku_id` supplied by the user or copied from `xhs_search_products` results. For product links or share text, use `xhs_get_product_detail_by_url`. This ID tool does not accept `spu_id`, product links, or search keywords. |
 | `xhs_get_product_detail_by_url` | Fetch Xiaohongshu product details from a product URL, short link, or share text containing a product link, without searching first. Returns the same fields as `xhs_get_product_detail_by_sku_id`; the returned `sku_id` can be used to read product reviews. Note links, profile links, and standalone share codes are not supported. |
