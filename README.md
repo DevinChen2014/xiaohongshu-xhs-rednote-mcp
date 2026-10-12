@@ -99,6 +99,7 @@ Supported workflows include:
 | Tool | Public purpose |
 | --- | --- |
 | `socialdatax_get_points_balance` | Query the current API Key account's SocialDataX points balance / 积分余额、剩余积分或点数. |
+| `xhs_search_users` | Search Xiaohongshu / 小红书 users, accounts, or creators by keyword with `page_token` pagination. When a user ID or profile URL is already available, use the corresponding user-profile tool. |
 | `xhs_search_notes` | Search Xiaohongshu / 小红书 notes by keyword with optional sort, note type, publish-time filters, and `page_token` continuation. Use the corresponding detail tool when the caller already has a note link or `note_id` and needs one note's details; use the corresponding URL/ID tool for comments, replies, or speech-to-text. To continue search pagination, pass the full returned `next_page_token` back unchanged as `page_token`; omit `page_token` on the first request. In every use of a returned `note_url`, such as final answers, display, references, storage, output, or forwarding, preserve the full URL exactly, including `xsec_token`; do not rebuild links from `note_id`. |
 | `xhs_search_videos` | Search Xiaohongshu video results by keyword with `page_token` pagination. For sorting or publish-time filters, use `xhs_search_notes` with `note_type="video"`. |
 | `xhs_search_images` | Search Xiaohongshu images by keyword; each result is one image with its associated note, and one note may contribute multiple images. Pagination may return no further results. For image notes, use `xhs_search_notes` with `note_type="image"`. |
