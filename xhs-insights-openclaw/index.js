@@ -1,6 +1,6 @@
 const PLUGIN_ID = "xhs-insights-openclaw-plugin";
 const PLUGIN_NAME = "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP";
-const PLUGIN_VERSION = "0.1.22";
+const PLUGIN_VERSION = "0.1.23";
 const DEFAULT_ENDPOINT_URL = "https://mcp.socialdatax.com/xhs/mcp";
 const DEFAULT_API_KEY_ENV = "SOCIALDATAX_API_KEY";
 const LEGACY_API_KEY_ENV = "SOCIAL_MEDIA_MCP_API_KEY";
@@ -39,6 +39,12 @@ const PRODUCT_REVIEW_PAGE_TOKEN_PROPERTY = {
   description: "Opaque product review pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same product SKU, sort_type, image filter, and caller. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
 };
 
+const PRODUCT_REVIEW_REPLY_PAGE_TOKEN_PROPERTY = {
+  type: "string",
+  default: "",
+  description: "Opaque product review replies pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same first-level review_id and caller.",
+};
+
 const COMMENT_PAGE_TOKEN_PROPERTY = {
   type: "string",
   default: "",
@@ -63,6 +69,10 @@ const TOPIC_NOTES_PAGE_TOKEN_PROPERTY = {
   description: "Opaque tag page note list pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same tag page and sort_type. Do not modify, truncate, redact, mask, omit, normalize, rebuild, generate, or replace the middle with ellipses.",
 };
 
+const NOTE_ID_PROPERTY_DESCRIPTION = "XHS note ID. Use a complete note_id supplied by the user, or copy one from note search, note detail, comments, tag page note, or creator note results. Do not truncate, shorten, redact, reformat, rebuild, or pass only a prefix.";
+const USER_ID_PROPERTY_DESCRIPTION = "XHS user_id. Use a complete user_id supplied by the user, or copy user_id or author.user_id from note search, product review, note detail, tag page note, creator profile, or creator note results. If only a profile link is available, use the profile URL tool. Do not pass an account number, display name, or profile name.";
+const PROFILE_URL_PROPERTY_DESCRIPTION = "XHS profile link, supported XHS short link, or share text containing one. Do not pass a note link.";
+
 const TOOL_DEFINITIONS = [
   {
     name: "xhs-insights__xhs_get_search_hot_list",
@@ -73,6 +83,23 @@ const TOOL_DEFINITIONS = [
       type: "object",
       additionalProperties: false,
       properties: {},
+    },
+  },
+  {
+    name: "xhs-insights__xhs_search_suggestions",
+    remoteName: "xhs_search_suggestions",
+    label: "Get XHS Search Suggestions",
+    description: "Fetch Xiaohongshu / XHS / RedNote search suggestions for a keyword or partial phrase.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["keyword"],
+      properties: {
+        keyword: {
+          type: "string",
+          description: "Search term or partial phrase. Do not pass a note link, profile link, note_id, user_id, or pagination token.",
+        },
+      },
     },
   },
   {
@@ -87,7 +114,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         keyword: {
           type: "string",
-          description: "XHS search keyword.",
+          description: "Search term or phrase, such as a brand, topic, person, product, or content need. Do not pass a note link, profile link, note_id, user_id, or page_token.",
         },
         page_token: NOTE_SEARCH_PAGE_TOKEN_PROPERTY,
         sort_type: {
@@ -121,7 +148,7 @@ const TOOL_DEFINITIONS = [
     name: "xhs-insights__xhs_search_products",
     remoteName: "xhs_search_products",
     label: "Search XHS Products",
-    description: "Search Xiaohongshu products by keyword with page_token continuation. To continue product search pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses.",
+    description: "Search Xiaohongshu products by product name, brand, category, or product-related query, with page_token continuation. Use this tool for search terms; if a complete sku_id is already available, including one supplied by the user, use the corresponding product detail or product review tool instead. For a product link or share text, use xhs-insights__xhs_get_product_detail_by_url. Do not use product links, sku_id, spu_id, or page_token as the keyword. To continue product search pagination, pass the full returned next_page_token back unchanged as page_token; do not truncate, summarize, mask, or replace the middle with ellipses.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -129,17 +156,17 @@ const TOOL_DEFINITIONS = [
       properties: {
         keyword: {
           type: "string",
-          description: "XHS product search keyword.",
+          description: "Search term such as a product name, brand, category, or product-related query. Do not pass a product link, sku_id, spu_id, or page_token.",
         },
         page_token: PRODUCT_SEARCH_PAGE_TOKEN_PROPERTY,
       },
     },
   },
   {
-    name: "xhs-insights__xhs_get_product_detail",
-    remoteName: "xhs_get_product_detail",
+    name: "xhs-insights__xhs_get_product_detail_by_sku_id",
+    remoteName: "xhs_get_product_detail_by_sku_id",
     label: "Get XHS Product Detail",
-    description: "Fetch Xiaohongshu product details by sku_id copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords.",
+    description: "Fetch Xiaohongshu product details by sku_id. Use a complete sku_id supplied by the user, or copy one from xhs_search_products results. For a product link, short link, or share text, use xhs-insights__xhs_get_product_detail_by_url. This tool does not accept spu_id, product links, or search keywords.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -147,7 +174,24 @@ const TOOL_DEFINITIONS = [
       properties: {
         sku_id: {
           type: "string",
-          description: "XHS product SKU ID copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords.",
+          description: "Complete XHS product SKU ID supplied by the user or copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords.",
+        },
+      },
+    },
+  },
+  {
+    name: "xhs-insights__xhs_get_product_detail_by_url",
+    remoteName: "xhs_get_product_detail_by_url",
+    label: "Get XHS Product Detail by URL",
+    description: "Fetch Xiaohongshu product details from a product link, short link, or share text without searching first. For a complete sku_id, use xhs-insights__xhs_get_product_detail_by_sku_id. The returned sku_id can be used for product reviews.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["url"],
+      properties: {
+        url: {
+          type: "string",
+          description: "XHS product-detail URL, short link, or complete share text containing a product link. Do not pass a note link, creator profile link, bare share code, or search keyword.",
         },
       },
     },
@@ -156,7 +200,7 @@ const TOOL_DEFINITIONS = [
     name: "xhs-insights__xhs_get_product_reviews",
     remoteName: "xhs_get_product_reviews",
     label: "Get XHS Product Reviews",
-    description: "Fetch Xiaohongshu product reviews by sku_id copied from xhs_search_products results; accepts sort_type: general (comprehensive sort, the default) or time_descending, has_image, and page_token continuation. This tool does not accept spu_id, product links, or search keywords.",
+    description: "Fetch Xiaohongshu product reviews by sku_id. Use a complete sku_id supplied by the user, or copy one from xhs_search_products results. Accepts sort_type: general (comprehensive sort, the default) or time_descending, has_image, and page_token continuation. This tool does not accept spu_id, product links, or search keywords.",
     parameters: {
       type: "object",
       additionalProperties: false,
@@ -164,7 +208,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         sku_id: {
           type: "string",
-          description: "XHS product SKU ID copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords.",
+          description: "Complete XHS product SKU ID supplied by the user or copied from xhs_search_products results. This tool does not accept spu_id, product links, or search keywords.",
         },
         page_token: PRODUCT_REVIEW_PAGE_TOKEN_PROPERTY,
         sort_type: {
@@ -178,6 +222,24 @@ const TOOL_DEFINITIONS = [
           default: false,
           description: "Whether to return only product reviews with images.",
         },
+      },
+    },
+  },
+  {
+    name: "xhs-insights__xhs_get_product_review_replies",
+    remoteName: "xhs_get_product_review_replies",
+    label: "Get XHS Product Review Replies",
+    description: "Fetch Xiaohongshu product review replies by first-level review_id. Use a user-provided review_id, or obtain one from xhs_get_product_reviews results. Do not construct or pass root_review_id.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["review_id"],
+      properties: {
+        review_id: {
+          type: "string",
+          description: "User-provided first-level product review ID, or copy it unchanged from xhs_get_product_reviews results. Do not pass root_review_id.",
+        },
+        page_token: PRODUCT_REVIEW_REPLY_PAGE_TOKEN_PROPERTY,
       },
     },
   },
@@ -210,7 +272,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         note_id: {
           type: "string",
-          description: "XHS note ID.",
+          description: NOTE_ID_PROPERTY_DESCRIPTION,
         },
       },
     },
@@ -227,7 +289,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         note_id: {
           type: "string",
-          description: "XHS note ID.",
+          description: NOTE_ID_PROPERTY_DESCRIPTION,
         },
         page_token: COMMENT_PAGE_TOKEN_PROPERTY,
         sort_type: {
@@ -275,7 +337,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         note_id: {
           type: "string",
-          description: "XHS note ID.",
+          description: NOTE_ID_PROPERTY_DESCRIPTION,
         },
         comment_id: {
           type: "string",
@@ -297,7 +359,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         user_id: {
           type: "string",
-          description: "XHS user ID.",
+          description: USER_ID_PROPERTY_DESCRIPTION,
         },
       },
     },
@@ -314,7 +376,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         profile_url: {
           type: "string",
-          description: "XHS profile URL, supported XHS short link, or share text.",
+          description: PROFILE_URL_PROPERTY_DESCRIPTION,
         },
       },
     },
@@ -331,7 +393,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         user_id: {
           type: "string",
-          description: "XHS user ID.",
+          description: USER_ID_PROPERTY_DESCRIPTION,
         },
         page_token: USER_POSTED_PAGE_TOKEN_PROPERTY,
       },
@@ -349,7 +411,7 @@ const TOOL_DEFINITIONS = [
       properties: {
         profile_url: {
           type: "string",
-          description: "XHS profile URL, supported XHS short link, or share text.",
+          description: PROFILE_URL_PROPERTY_DESCRIPTION,
         },
         page_token: USER_POSTED_PAGE_TOKEN_PROPERTY,
       },
@@ -561,7 +623,7 @@ function extractTextContent(content) {
 export default {
   id: PLUGIN_ID,
   name: PLUGIN_NAME,
-  description: "Social media research and marketing research for Xiaohongshu, XHS, RedNote, and 小红书: read the search hot list, search notes and products, fetch product details and product reviews, analyze comments, read note details, replies, creator profiles, and creator posts through a hosted MCP service.",
+  description: "Social media research and marketing research for Xiaohongshu, XHS, RedNote, and 小红书: get search suggestions, read the search hot list, search notes and products, fetch product details, product reviews, and product review replies, analyze comments, read note details, replies, creator profiles, and creator posts through a hosted MCP service.",
   configSchema: CONFIG_SCHEMA,
   register,
 };
