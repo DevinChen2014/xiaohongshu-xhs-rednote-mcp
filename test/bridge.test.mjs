@@ -56,6 +56,16 @@ test("starts without an API Key and leaves authentication to the hosted service"
   });
 });
 
+test("ignores the public config placeholder instead of forwarding it as a key", async () => {
+  const result = await runBridge("<SOCIALDATAX_API_KEY>");
+
+  assert.equal(result.code, 0, result.stderr);
+  assert.deepEqual(JSON.parse(result.stdout), {
+    args: ["https://example.test/xhs/mcp", "--transport", "http-only", "--silent"],
+    apiKey: null,
+  });
+});
+
 test("forwards a configured API Key through the Authorization header", async () => {
   const result = await runBridge("test-api-key");
 

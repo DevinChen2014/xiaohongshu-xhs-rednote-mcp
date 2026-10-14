@@ -6,7 +6,7 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 - Official MCP Registry: `0.1.15` (`active`, `isLatest=true`), published and verified on `2026-10-14`.
 - Public GitHub server card: `0.1.15` with 35 tools, synced and verified on `2026-10-14`.
 - The public tool catalog is maintained in [`server-card.json`](server-card.json); npm bridge versions are independent of the hosted tool catalog.
-- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.17`; bridge package versions are independent of hosted capability versions.
+- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.18`; bridge package versions are independent of hosted capability versions.
 
 The current capability includes encrypted user ID resolution, PGY creator profiles, note performance, fans profiles and fans summaries, product review reply-reply lookup, product detail lookup by URL, and the product detail field rename (`images` to `main_images`; `detail_images` remains unchanged).
 
@@ -72,7 +72,7 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 - `xhs_submit_video_speech_text_by_note_url`, `xhs_submit_video_speech_text_by_note_id`, and `xhs_get_video_speech_text_job` are present in `tools/list`; if any are missing, deploy the latest service before publishing.
 - `examples/codex_config.toml` uses remote HTTP URL and `bearer_token_env_var`, not `mcp-remote`.
 - `examples/cursor_mcp.json` uses remote HTTP URL and `headers` with `${env:SOCIALDATAX_API_KEY}`, not `mcp-remote`.
-- `mcp.json` is explicitly command/stdio fallback and uses `mcp-remote`.
+- `mcp.json` uses the npm bridge with the package version pinned; the placeholder API Key is ignored for discovery, while business tool calls require a real key.
 - `https://glama.ai/mcp/servers/@DevinChen2014/xiaohongshu-xhs-rednote-mcp` is no longer `404`.
 - `https://glama.ai/mcp/servers/@DevinChen2014/xiaohongshu-xhs-rednote-mcp/badges/score.svg` is reachable.
 

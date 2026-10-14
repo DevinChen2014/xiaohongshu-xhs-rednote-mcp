@@ -40,7 +40,7 @@ Common search phrases for this MCP service:
 - Official MCP Registry: `0.1.15` (`active`, `isLatest=true`), published and verified on `2026-10-14`.
 - Public GitHub server card: `0.1.15` with 35 tools, synced and verified on `2026-10-14`.
 - The public tool catalog is maintained in [`server-card.json`](server-card.json); npm bridge versions are independent of the hosted tool catalog.
-- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.17`; bridge package versions are independent of hosted capability versions.
+- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.18`; bridge package versions are independent of hosted capability versions.
 
 The current capability includes encrypted user ID resolution, PGY creator profiles, note performance, fans profiles and fans summaries, product review reply-reply lookup, product detail lookup by URL, and the product detail field rename (`images` to `main_images`; `detail_images` remains unchanged).
 
@@ -212,7 +212,7 @@ Use the key as a Bearer token in the `Authorization` request header. Do not comm
 Public metadata files in this repository:
 
 - [server-card.json](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/server-card.json): directory-oriented metadata for the hosted service. Official MCP Registry publishing uses the private source repo's `registry/xhs/server.json` for the current `com.52choujiang/xhs-insights` entry.
-- [mcp.json](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/mcp.json): generic command/stdio fallback config using `mcp-remote`.
+- [mcp.json](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/mcp.json): command/stdio config using the npm bridge; tool discovery works without an API Key.
 - [glama.json](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/glama.json): Glama repository ownership metadata.
 - [SUBMISSION_CHECKLIST.md](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/SUBMISSION_CHECKLIST.md): checklist for MCP directory submissions.
 

@@ -4,7 +4,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "xiaohongshu-xhs-rednote-mcp@0.1.17"
+        "xiaohongshu-xhs-rednote-mcp@0.1.18"
       ],
       "env": {
         "SOCIALDATAX_API_KEY": "<SOCIALDATAX_API_KEY>"
