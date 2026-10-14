@@ -6,13 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const DEFAULT_UPSTREAM_URL = "https://mcp.socialdatax.com/xhs/mcp";
 const apiKey = process.env.SOCIALDATAX_API_KEY?.trim();
-
-if (!apiKey || apiKey === "<SOCIALDATAX_API_KEY>") {
-  console.error(
-    "[xhs-mcp-bridge] Set SOCIALDATAX_API_KEY to a real API Key before starting the bridge."
-  );
-  process.exit(1);
-}
+const hasApiKey = Boolean(apiKey && apiKey !== "<SOCIALDATAX_API_KEY>");
 
 const remotePackagePath = fileURLToPath(
   import.meta.resolve("mcp-remote/package.json")
@@ -29,10 +23,15 @@ const args = [
   "--transport",
   "http-only",
   "--silent",
-  "--header",
-  'Authorization: Bearer ${SOCIALDATAX_API_KEY}',
 ];
-const childEnv = { ...process.env, SOCIALDATAX_API_KEY: apiKey };
+const childEnv = { ...process.env };
+
+if (hasApiKey) {
+  args.push("--header", 'Authorization: Bearer ${SOCIALDATAX_API_KEY}');
+  childEnv.SOCIALDATAX_API_KEY = apiKey;
+} else {
+  delete childEnv.SOCIALDATAX_API_KEY;
+}
 
 const child = spawn(process.execPath, [remoteEntry, ...args], {
   stdio: "inherit",
