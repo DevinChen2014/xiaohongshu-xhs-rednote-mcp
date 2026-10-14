@@ -4,10 +4,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "mcp-remote",
-        "https://mcp.socialdatax.com/xhs/mcp",
-        "--header",
-        "Authorization: Bearer ${SOCIALDATAX_API_KEY}"
+        "xiaohongshu-xhs-rednote-mcp@0.1.17"
       ],
       "env": {
         "SOCIALDATAX_API_KEY": "<SOCIALDATAX_API_KEY>"
