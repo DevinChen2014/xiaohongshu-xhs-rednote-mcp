@@ -2,9 +2,9 @@
 
 Use this checklist before syncing this listing to the public XHS MCP repository, submitting it to MCP directories, or updating the Glama entry.
 
-- Local capability: `0.1.14` with 36 tracked tools, including creator commercial overview and note performance metrics.
-- Hosted production: `0.1.14` with 36 tools; authenticated tool discovery verified on `2026-10-11`, including separate video and image search tools.
-- Official MCP Registry: `0.1.14` (`active`, `isLatest=true`), published and verified on `2026-09-29`.
+- Hosted production: `0.1.15` with 35 tools; deployment and authenticated tool discovery verified on `2026-10-14`. Video notes remain available through `xhs_search_notes(note_type="video")`.
+- Official MCP Registry: `0.1.15` (`active`, `isLatest=true`), published and verified on `2026-10-14`.
+- Public GitHub server card: `0.1.15` with 35 tools, synced and verified on `2026-10-14`.
 - The public tool catalog is maintained in [`server-card.json`](server-card.json); npm bridge versions are independent of the hosted tool catalog.
 - npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.16`, published on `2026-09-29`; bridge package versions are independent of hosted capability versions.
 
@@ -56,9 +56,9 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 
 - Hosted streamable HTTP clients can connect directly to `https://mcp.socialdatax.com/xhs/mcp` with `Authorization: Bearer <SOCIALDATAX_API_KEY>`.
 - With a valid key, hosted MCP `initialize` succeeds.
-- For each capability update, verify hosted MCP `tools/list` returns the current 36 public tools with a valid key.
+- After deployment, verify hosted MCP `tools/list` returns the current 35 public tools with a valid key.
 - With a valid key, hosted XHS MCP `tools/list` includes `xhs_pgy_get_creator_profile` and `xhs_pgy_get_creator_notes_performance`.
-- Before publishing this listing draft, compare the exact tool names and schemas in its `server-card.json` with authenticated production `tools/list`; matching tool counts alone do not establish that the manifests match. This was rechecked on `2026-09-29` after deployment.
+- The `2026-10-14` deployment smoke verified the exact 35-tool XHS public surface and the `note_type` filter schema against production `tools/list`.
 - `xhs_get_product_detail_by_url` accepts only the required `url` field; the ID tool remains `xhs_get_product_detail_by_sku_id(sku_id)`. Both return the same product detail fields.
 - `xhs_search_suggestions` is present in `tools/list` and accepts only the required `keyword` field.
 - `xhs_pgy_get_note_detail_by_note_id` and `xhs_pgy_get_note_detail_by_note_url` are present in `tools/list`, the old MCP name is absent, and both descriptions state the 20-point successful-call cost and that failures are not charged.
