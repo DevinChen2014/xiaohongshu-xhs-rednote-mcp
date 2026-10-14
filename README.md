@@ -40,7 +40,7 @@ Common search phrases for this MCP service:
 - Official MCP Registry: `0.1.15` (`active`, `isLatest=true`), published and verified on `2026-10-14`.
 - Public GitHub server card: `0.1.15` with 35 tools, synced and verified on `2026-10-14`.
 - The public tool catalog is maintained in [`server-card.json`](server-card.json); npm bridge versions are independent of the hosted tool catalog.
-- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.16`, published on `2026-09-29`; bridge package versions are independent of hosted capability versions.
+- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.17`; bridge package versions are independent of hosted capability versions.
 
 The current capability includes encrypted user ID resolution, PGY creator profiles, note performance, fans profiles and fans summaries, product review reply-reply lookup, product detail lookup by URL, and the product detail field rename (`images` to `main_images`; `detail_images` remains unchanged).
 
@@ -69,6 +69,8 @@ Command/stdio-only MCP clients can install and start the bridge directly from np
 ```
 
 The package only forwards local stdio MCP messages to the hosted SocialDataX XHS endpoint. It does not contain the private service implementation or store the API Key.
+
+The public tool catalog can be discovered without an API Key. Set `SOCIALDATAX_API_KEY` for business tool calls; without it, the bridge can start for discovery, while the hosted service requires authentication for business data.
 
 ## Workflow Scope
 
