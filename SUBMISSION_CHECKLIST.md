@@ -6,7 +6,7 @@ Use this checklist before syncing this listing to the public XHS MCP repository,
 - Official MCP Registry: `0.1.15` (`active`, `isLatest=true`), published and verified on `2026-10-14`.
 - Public GitHub server card: `0.1.15` with 35 tools, synced and verified on `2026-10-14`.
 - The public tool catalog is maintained in [`server-card.json`](server-card.json); npm bridge versions are independent of the hosted tool catalog.
-- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.16`, published on `2026-09-29`; bridge package versions are independent of hosted capability versions.
+- npm stdio bridge: `xiaohongshu-xhs-rednote-mcp@0.1.17`; bridge package versions are independent of hosted capability versions.
 
 The current capability includes encrypted user ID resolution, PGY creator profiles, note performance, fans profiles and fans summaries, product review reply-reply lookup, product detail lookup by URL, and the product detail field rename (`images` to `main_images`; `detail_images` remains unchanged).
 
@@ -24,6 +24,7 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 - Future registry name: `com.socialdatax/xhs-insights`
 - Hosted MCP endpoint: `https://mcp.socialdatax.com/xhs/mcp`
 - Hosted auth: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
+- Public `initialize` and `tools/list` do not require an API Key; business tool calls require a valid key.
 - Default client transport: hosted `streamable-http`
 - Command/stdio fallback: set `SOCIALDATAX_API_KEY` in the client environment, then use `npx -y mcp-remote https://mcp.socialdatax.com/xhs/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'`
 - License: MIT for the public documentation and examples only
@@ -108,6 +109,6 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 - Both PGY tools state enrolled-creators-only scope, 20 points on success and no charge on failure.
 - Explicit no-commercial-data retains MCP `pgy_commercial_data_unavailable` and HTTP `1009`, with the not-enrolled message; no ID/URL retry.
 - Transport, authentication, balance and input errors are not reclassified.
-- Tool descriptions and server card were refreshed together for the `0.1.14` release; use the dated channel records above for publication status and recheck the official Registry before submission.
+- Tool descriptions and server card were refreshed together for the `0.1.15` release; use the dated channel records above for publication status and recheck the official Registry before submission.
 
 - `xhs_pgy_get_creator_metrics_trend` accepts user_id and optional note_scope (daily/cooperation), echoes the scope, and returns summary/items with medians and estimated costs. Verify daily store fields are null, cooperation preserves zero store medians with positive costs, date gaps remain, and successful calls cost 20 points.
