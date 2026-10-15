@@ -26,7 +26,7 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 - Hosted auth: `Authorization: Bearer <SOCIALDATAX_API_KEY>`
 - Public `initialize` and `tools/list` do not require an API Key; business tool calls require a valid key.
 - Default client transport: hosted `streamable-http`
-- Command/stdio fallback: set `SOCIALDATAX_API_KEY` in the client environment, then use `npx -y mcp-remote https://mcp.socialdatax.com/xhs/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'`
+- Command/stdio config: use the pinned npm bridge in `mcp.json`; for clients configured with `mcp-remote` directly, set `SOCIALDATAX_API_KEY` in the client environment and use `npx -y mcp-remote https://mcp.socialdatax.com/xhs/mcp --header 'Authorization: Bearer ${SOCIALDATAX_API_KEY}'`.
 - License: MIT for the public documentation and examples only
 
 ## Safety Checks

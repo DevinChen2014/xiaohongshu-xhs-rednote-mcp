@@ -1,6 +1,6 @@
 const PLUGIN_ID = "xhs-insights-openclaw-plugin";
 const PLUGIN_NAME = "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP";
-const PLUGIN_VERSION = "0.1.23";
+const PLUGIN_VERSION = "0.1.24";
 const DEFAULT_ENDPOINT_URL = "https://mcp.socialdatax.com/xhs/mcp";
 const DEFAULT_API_KEY_ENV = "SOCIALDATAX_API_KEY";
 const LEGACY_API_KEY_ENV = "SOCIAL_MEDIA_MCP_API_KEY";
@@ -43,6 +43,12 @@ const PRODUCT_REVIEW_REPLY_PAGE_TOKEN_PROPERTY = {
   type: "string",
   default: "",
   description: "Opaque product review replies pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same first-level review_id and caller.",
+};
+
+const PRODUCT_REVIEW_REPLY_REPLY_PAGE_TOKEN_PROPERTY = {
+  type: "string",
+  default: "",
+  description: "Opaque nested product review reply pagination token. Leave empty for the first page; pass the complete returned next_page_token back unchanged. Use only with the same product review reply review_id and caller.",
 };
 
 const COMMENT_PAGE_TOKEN_PROPERTY = {
@@ -240,6 +246,24 @@ const TOOL_DEFINITIONS = [
           description: "User-provided first-level product review ID, or copy it unchanged from xhs_get_product_reviews results. Do not pass root_review_id.",
         },
         page_token: PRODUCT_REVIEW_REPLY_PAGE_TOKEN_PROPERTY,
+      },
+    },
+  },
+  {
+    name: "xhs-insights__xhs_get_product_review_reply_replies",
+    remoteName: "xhs_get_product_review_reply_replies",
+    label: "Get XHS Product Review Reply Replies",
+    description: "Fetch nested replies under a Xiaohongshu product review reply. Use a user-provided reply review_id, or obtain one from xhs_get_product_review_replies results. Do not construct or pass root_review_id.",
+    parameters: {
+      type: "object",
+      additionalProperties: false,
+      required: ["review_id"],
+      properties: {
+        review_id: {
+          type: "string",
+          description: "User-provided product review reply ID, or copy it unchanged from xhs_get_product_review_replies results. Do not pass root_review_id.",
+        },
+        page_token: PRODUCT_REVIEW_REPLY_REPLY_PAGE_TOKEN_PROPERTY,
       },
     },
   },
@@ -531,7 +555,7 @@ async function callRemoteMcpTool({ api, remoteName, publicName, args }) {
       arguments: args,
     }, undefined, { timeout: config.connectionTimeoutMs });
     if (result.isError) {
-      throw new Error(extractMcpErrorMessage(result, remoteName));
+      throw buildMcpToolError(result, remoteName);
     }
     return buildOpenClawToolResult(result, publicName);
   } finally {
@@ -607,6 +631,25 @@ function extractMcpErrorMessage(result, remoteName) {
     extractTextContent(result.content) ||
     `Remote MCP tool ${remoteName} returned an error.`
   );
+}
+
+function buildMcpToolError(result, remoteName) {
+  const details = result.structuredContent;
+  const metadata = [];
+  if (typeof details?.code === "string") {
+    metadata.push(`code: ${details.code}`);
+  }
+  if (typeof details?.retry_after_seconds === "number") {
+    metadata.push(`retry_after_seconds: ${details.retry_after_seconds}`);
+  }
+  const message = extractMcpErrorMessage(result, remoteName);
+  const error = new Error(
+    metadata.length > 0 ? `${message} (${metadata.join("; ")})` : message,
+  );
+  if (details && typeof details === "object") {
+    error.structuredContent = details;
+  }
+  return error;
 }
 
 function extractTextContent(content) {

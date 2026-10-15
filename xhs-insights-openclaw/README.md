@@ -9,8 +9,8 @@ The plugin registers namespaced OpenClaw tools and forwards each call to the hos
 - Product: `SocialDataX` / `社媒数据助手`
 - Website: <https://socialdatax.com>
 - Package name: `xhs-insights-openclaw-plugin`
-- Version: `0.1.23`
-- Search terms: Xiaohongshu, XHS, RedNote, 小红书, 小红书搜索建议, 小红书搜索热榜, 小红书商品搜索, 小红书商品评价, search suggestions, search hot list, product search, product reviews, social media research, marketing research, comments, creator profiles
+- Version: `0.1.24`
+- Search terms: Xiaohongshu, XHS, RedNote, 小红书, 小红书搜索建议, 小红书搜索热榜, 小红书商品搜索, 小红书商品评价, 商品评价回复, 嵌套评价回复, search suggestions, search hot list, product search, product reviews, nested product review replies, social media research, marketing research, comments, creator profiles
 
 ## Capabilities
 
@@ -22,6 +22,7 @@ This OpenClaw plugin exposes read-only Xiaohongshu / XHS / RedNote workflows:
 - Fetch product details from a product link, short link, or share text with `xhs-insights__xhs_get_product_detail_by_url`, without searching first.
 - Fetch product reviews by a complete `sku_id` supplied by the user or copied from product search results; accepts `sort_type`: `general` (comprehensive sort, the default) or `time_descending`, `has_image`, and `page_token` continuation.
 - Fetch replies under a first-level product review using a user-provided `review_id` or one copied from `xhs_get_product_reviews`; accepts opaque `page_token` continuation and does not accept `root_review_id`.
+- Fetch nested replies under a product review reply using a user-provided `review_id` or one copied from `xhs_get_product_review_replies`; accepts opaque `page_token` continuation and does not accept `root_review_id`.
 - Fetch the Xiaohongshu / XHS / RedNote search hot list with title and heat value.
 - Fetch search suggestions for a keyword or partial phrase.
 - Resolve shared note links, short links, or share text into structured details.
@@ -83,7 +84,7 @@ clawhub package publish <public-checkout>/xhs-insights-openclaw \
   --family code-plugin \
   --name xhs-insights-openclaw-plugin \
   --display-name "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP" \
-  --version 0.1.23 \
+  --version 0.1.24 \
   --source-repo <public-owner/public-repo> \
   --source-commit <public-commit-sha> \
   --source-path xhs-insights-openclaw \

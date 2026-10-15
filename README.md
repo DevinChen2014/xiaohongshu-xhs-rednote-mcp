@@ -6,7 +6,7 @@ If you are looking for a 小红书 MCP, Xiaohongshu MCP, XHS MCP, or RedNote MCP
 
 - public MCP metadata and client configuration examples
 - the hosted `streamable-http` endpoint for clients that support remote MCP
-- an `mcp-remote` fallback example for command/stdio-only MCP clients
+- command/stdio configurations for the npm bridge and direct `mcp-remote` use
 
 The business implementation is privately hosted. This repository exposes only the public connection surface for social media content intelligence workflows.
 
@@ -46,7 +46,7 @@ The current capability includes encrypted user ID resolution, PGY creator profil
 
 ## Platform MCP
 
-Use the hosted `streamable-http` endpoint directly from clients that support authenticated remote MCP. For clients that only support command/stdio MCP servers, use `mcp-remote` as a local compatibility proxy.
+Use the hosted `streamable-http` endpoint directly from clients that support authenticated remote MCP. Command/stdio clients can use the npm bridge in `mcp.json` or configure `mcp-remote` directly.
 
 ## npm stdio bridge
 
@@ -157,6 +157,8 @@ For clients that support authenticated `streamable-http`, use the hosted endpoin
 
 A ready-to-copy example is available in [`examples/streamable_http_config.json`](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/examples/streamable_http_config.json).
 
+### Direct `mcp-remote` configuration
+
 For command/stdio-only MCP clients, use `mcp-remote`:
 
 ```json
@@ -187,14 +189,15 @@ claude mcp add --transport http socialdatax-xhs https://mcp.socialdatax.com/xhs/
 
 Persist `SOCIALDATAX_API_KEY` in the runtime environment or client Secret before restarting Claude Code.
 
-Claude Desktop should use its remote MCP / Connectors UI when available. If a local configuration file in your version only supports command/stdio servers, use the `mcp-remote` fallback.
+Claude Desktop should use its remote MCP / Connectors UI when available. If your version only supports command/stdio servers, use the npm bridge or the `mcp-remote` configuration below.
 
 ## Client Examples
 
 Configuration examples are available in [examples](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/tree/main/examples):
 
-- [Command/stdio fallback config](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/mcp.json)
+- [npm bridge command/stdio config](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/mcp.json)
 - [Claude Desktop fallback config](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/examples/claude_desktop_config.json)
+- [Direct `mcp-remote` example](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp#direct-mcp-remote-configuration)
 - [Cursor remote HTTP config](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/examples/cursor_mcp.json)
 - [Codex remote HTTP config](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/examples/codex_config.toml)
 - [Direct streamable HTTP config](https://github.com/DevinChen2014/xiaohongshu-xhs-rednote-mcp/blob/main/examples/streamable_http_config.json)
