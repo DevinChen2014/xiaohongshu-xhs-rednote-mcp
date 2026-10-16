@@ -9,7 +9,7 @@ The plugin registers namespaced OpenClaw tools and forwards each call to the hos
 - Product: `SocialDataX` / `社媒数据助手`
 - Website: <https://socialdatax.com>
 - Package name: `xhs-insights-openclaw-plugin`
-- Version: `0.1.24`
+- Version: `0.1.25`
 - Search terms: Xiaohongshu, XHS, RedNote, 小红书, 小红书搜索建议, 小红书搜索热榜, 小红书商品搜索, 小红书商品评价, 商品评价回复, 嵌套评价回复, search suggestions, search hot list, product search, product reviews, nested product review replies, social media research, marketing research, comments, creator profiles
 
 ## Capabilities
@@ -49,11 +49,7 @@ It intentionally does not include `.codex-plugin/` or `.mcp.json`, because OpenC
 
 ## API Key
 
-Set the shared API key before using this plugin:
-
-```bash
-export SOCIALDATAX_API_KEY="<SOCIALDATAX_API_KEY>"
-```
+Set `SOCIALDATAX_API_KEY` in the environment of the OpenClaw process to your SocialDataX API Key. Keep its value in your local secret manager or environment settings.
 
 The key is sent as:
 
@@ -64,6 +60,12 @@ Authorization: Bearer ${SOCIALDATAX_API_KEY}
 The plugin sends the key only to the fixed endpoint `https://mcp.socialdatax.com/xhs/mcp`. It does not support overriding the endpoint URL.
 
 Do not commit real API keys to code, docs, issues, or screenshots.
+
+### Legacy API Key compatibility
+
+For existing installations, `SOCIAL_MEDIA_MCP_API_KEY` is read only when `SOCIALDATAX_API_KEY` is unset or blank. Its value is sent as a Bearer token only to `https://mcp.socialdatax.com/xhs/mcp`.
+
+Use `SOCIALDATAX_API_KEY` for new configurations. Unset the legacy variable if you do not want the plugin to use it. The primary variable takes precedence when both have nonblank values.
 
 ## Tool Names
 
@@ -84,7 +86,7 @@ clawhub package publish <public-checkout>/xhs-insights-openclaw \
   --family code-plugin \
   --name xhs-insights-openclaw-plugin \
   --display-name "社媒数据助手 小红书 MCP | Xiaohongshu XHS RedNote MCP" \
-  --version 0.1.24 \
+  --version 0.1.25 \
   --source-repo <public-owner/public-repo> \
   --source-commit <public-commit-sha> \
   --source-path xhs-insights-openclaw \
